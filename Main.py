@@ -3,9 +3,8 @@ from tkinter import *
 import math
 import random
 
-object_array = []
-
 half_height, half_width = 1,1
+object_array = []
 
 def add_triangle(v1, v2, v3, colour):
     tri = [v1, v2, v3, colour]
@@ -29,15 +28,12 @@ def load_mtl(file_name):
             current_material = line.split[-1]
     return materials
 
-def render_triangle(x1,y1,x2,y2,x3,y3,colour,viewport):
-    points = [x1,y1, x2,y2, x3,y3]
-    viewport.create_polygon(points, fill = colour)
-
 def get_normal_from_triangle(x1,y1,z1,x2,y2,z2,x3,y3,z3):
-	lx1, ly1, lz1 = x2 - x1, y2 - y1, z2 - z1
-	lx2, ly2, lz2 = x3 - x1, y3 - y1, z3 - z1
-    #I have no clue what happened here, it wouldnt let me use indented line seperation and forced seicolons
-	nx,ny,nz = ly1 * lz2 - lz1 * ly2, lz1 * lx2 - lx1 * lz2, lx1 * ly2 - ly1 * lx2;     normal_length = math.sqrt(nx*nx+ny*ny+nz*nz); return nx/normal_length, ny/normal_length, nz/normal_length
+    lx1, ly1, lz1 = x2 - x1, y2 - y1, z2 - z1
+    lx2, ly2, lz2 = x3 - x1, y3 - y1, z3 - z1
+    nx,ny,nz = ly1 * lz2 - lz1 * ly2, lz1 * lx2 - lx1 * lz2, lx1 * ly2 - ly1 * lx2
+    normal_length = math.sqrt(nx*nx+ny*ny+nz*nz)
+    return nx/normal_length, ny/normal_length, nz/normal_length
 
 def get_normal_from_angle(angle_x, angle_y, angle_z):
     x, y, z = 0,0,0
@@ -55,11 +51,12 @@ def get_dot_product(x1,y1,z1,x2,y2,z2):
     l = math.sqrt(dpx*dpx+dpy*dpy+dpz*dpz)
     return dp/l
 
-def render_wall_from_normalised_points(x1_3d,y1_3d,z1_3d,x2_3d,y2_3d,z2_3d,x3_3d,y3_3d,z3_3d,colour,viewport):
+def render_wall_from_normalised_points(x1_3d,y1_3d,z1_3d,x2_3d,y2_3d,z2_3d,x3_3d,y3_3d,z3_3d,colour):
     global half_width, half_height
     nx,ny,nz = get_normal_from_triangle(x1_3d,y1_3d,z1_3d,x2_3d,y2_3d,z2_3d,x3_3d,y3_3d,z3_3d)
     #pnx,pny,pnz = get_normal_from_angle(angle_x, angle_y, angle_z)
     #dp = get_dot_product(nx,ny,nz,pnx,pny,pnz)
+    print(nz)
     if nz <=0:
         x1_2d = x1_3d*half_width+half_width
         y1_2d = y1_3d*half_height+half_height
@@ -67,7 +64,8 @@ def render_wall_from_normalised_points(x1_3d,y1_3d,z1_3d,x2_3d,y2_3d,z2_3d,x3_3d
         y2_2d = y2_3d*half_height+half_height
         x3_2d = x3_3d*half_width+half_width
         y3_2d = y3_3d*half_height+half_height
-        render_triangle(int(x1_2d),int(y1_2d),int(x2_2d),int(y2_2d),int(x3_2d),int(y3_2d),colour,viewport)
+        print(int(x1_2d),int(y1_2d),int(x2_2d),int(y2_2d),int(x3_2d),int(y3_2d),colour)
+        return [int(x1_2d),int(y1_2d),int(x2_2d),int(y2_2d),int(x3_2d),int(y3_2d),colour]
 
 def rotate_point_z_axis(x,y,z, angle):
     rx = x * math.cos(angle) - y * math.sin(angle)
@@ -100,13 +98,13 @@ def scale_point(x,y,z, zfar, znear, fov, ar, camera_x, camera_y, camera_z ,camer
     return [x,y,z]
 
 
+
 class object:
-    object_array = []
-    def __init__(object, x = 0, y = 0 , z = 0, ax = 0, ay = 0, az = 0, colour = None):
+    def __init__(self, _model, x = 0, y = 0 , z = 0, ax = 0, ay = 0, az = 0, colour = None):
         ax, ay, az = math.radians(ax), math.radians(ay), math.radians(az)
-        object = open(object, 'rt')
+        model = open(_model, 'rt')
         count = 0
-        for line in object:
+        for line in model:
             if line[0] == 'v' and line[1] == ' ':
                 count+=1
                 split = line.split()
@@ -158,38 +156,30 @@ class object:
                 for p in range(2,len(split)-1):
                     add_triangle(locals()["fv1"], locals()["fv"+str(p)], locals()["fv"+str(p+1)], new_colour)
 
+    def get_object(self):
+        global object_array
+        return object_array[0]
+
 class gl:
     map_array = []
     width, height = 1920,1080
-    master, frame, viewport = None, None, None
     zfar, znear, fov = 1000, 0.1, math.radians(55)
     camera_x, camera_y, camera_z = 0,0,0
     camera_angle_x, camera_angle_y, camera_angle_z = 0,0,0
+    ar = int(height)/int(width)
     
-    def __init__(self, window_height = 1080, window_width = 1920, title = 'gl_default', _fov = math.radians(55), _zfar = 100, _znear = 0.1):
-        global half_height, half_width
-        half_height, half_width = int(window_height/2), int(window_width/2)
+    def __init__(self, _height = 1080, _width = 1920, _fov = math.radians(55), _zfar = 1000, _znear = 0.1):
         self.zfar, self.znear, self.fov = _zfar, _znear, _fov
-        self.width = window_width
-        self.height = window_height
-        hwstr = str(self.width) + 'x' + str(window_height)
+        self.width = _width
+        self.height = _height
 
-        #init the window and viewport
-        self.master = Tk()
-        self.master.geometry(hwstr)
-        self.master.title(title)
-        self.frame = Frame(self.master, width=self.width, height=self.height, bg="black")
-        self.frame.focus_set()
-        self.frame.pack(anchor=SW, side=LEFT)
-        self.viewport = Canvas(self.frame, width=self.width, height=self.height)
-        self.viewport.pack(side=TOP)
 
     def new_frame(self):
-        self.viewport.create_rectangle(0, 0, self.width, self.height, fill="white")
+        frame = []
         for wall_num in range(0,len(self.map_array)):
             wall = self.map_array[wall_num]
+            
             for point in range(0,len(wall)-1):
                 locals()["sp" + str(point) + str(wall_num)] = scale_point(wall[point][0],wall[point][1],wall[point][2], self.zfar, self.znear, self.fov, self.ar, self.camera_x, self.camera_y, self.camera_z , self.camera_angle_x, self.camera_angle_y, self.camera_angle_z)
-            render_wall_from_normalised_points(locals()["sp0"+ str(wall_num)][0],locals()["sp0"+ str(wall_num)][1],locals()["sp0"+ str(wall_num)][2],locals()["sp1"+ str(wall_num)][0],locals()["sp1"+ str(wall_num)][1],locals()["sp1"+ str(wall_num)][2],locals()["sp2"+ str(wall_num)][0],locals()["sp2"+ str(wall_num)][1],locals()["sp2"+ str(wall_num)][2],wall[len(wall)-1], self.viewport)
-
-    
+            frame.append(render_wall_from_normalised_points(locals()["sp0"+ str(wall_num)][0],locals()["sp0"+ str(wall_num)][1],locals()["sp0"+ str(wall_num)][2],locals()["sp1"+ str(wall_num)][0],locals()["sp1"+ str(wall_num)][1],locals()["sp1"+ str(wall_num)][2],locals()["sp2"+ str(wall_num)][0],locals()["sp2"+ str(wall_num)][1],locals()["sp2"+ str(wall_num)][2],wall[len(wall)-1]))
+        return frame
