@@ -1,5 +1,3 @@
-from tkinter.ttk import *
-from tkinter import *
 import math
 import random
 
@@ -56,7 +54,6 @@ def render_wall_from_normalised_points(x1_3d,y1_3d,z1_3d,x2_3d,y2_3d,z2_3d,x3_3d
     nx,ny,nz = get_normal_from_triangle(x1_3d,y1_3d,z1_3d,x2_3d,y2_3d,z2_3d,x3_3d,y3_3d,z3_3d)
     #pnx,pny,pnz = get_normal_from_angle(angle_x, angle_y, angle_z)
     #dp = get_dot_product(nx,ny,nz,pnx,pny,pnz)
-    print(nz)
     if nz <=0:
         x1_2d = x1_3d*half_width+half_width
         y1_2d = y1_3d*half_height+half_height
@@ -64,7 +61,6 @@ def render_wall_from_normalised_points(x1_3d,y1_3d,z1_3d,x2_3d,y2_3d,z2_3d,x3_3d
         y2_2d = y2_3d*half_height+half_height
         x3_2d = x3_3d*half_width+half_width
         y3_2d = y3_3d*half_height+half_height
-        print(int(x1_2d),int(y1_2d),int(x2_2d),int(y2_2d),int(x3_2d),int(y3_2d),colour)
         return [int(x1_2d),int(y1_2d),int(x2_2d),int(y2_2d),int(x3_2d),int(y3_2d),colour]
 
 def rotate_point_z_axis(x,y,z, angle):
@@ -86,11 +82,10 @@ def rotate_point_x_axis(x,y,z, angle):
     return rx,ry,rz
 
 def scale_point(x,y,z, zfar, znear, fov, ar, camera_x, camera_y, camera_z ,camera_angle_x, camera_angle_y, camera_angle_z):
-    x,y,z = camera_x+x,camera_y+y,camera_z+z
     x,y,z = rotate_point_z_axis(x,y,z, camera_angle_z)
     x,y,z = rotate_point_y_axis(x,y,z, camera_angle_y)
     x,y,z = rotate_point_x_axis(x,y,z, camera_angle_x)
-    
+    x,y,z = camera_x+x,camera_y+y,camera_z+z
     if z != 0:
         x = (ar*(1/math.tan(fov/2))*x)/z
         y = ((1/math.tan(fov/2))*y)/z
@@ -158,28 +153,48 @@ class object:
 
     def get_object(self):
         global object_array
-        return object_array[0]
+        return object_array
 
 class gl:
-    map_array = []
-    width, height = 1920,1080
-    zfar, znear, fov = 1000, 0.1, math.radians(55)
-    camera_x, camera_y, camera_z = 0,0,0
-    camera_angle_x, camera_angle_y, camera_angle_z = 0,0,0
-    ar = int(height)/int(width)
-    
-    def __init__(self, _height = 1080, _width = 1920, _fov = math.radians(55), _zfar = 1000, _znear = 0.1):
+    map_array = []    
+    def __init__(self, _width = 1920, _height = 1080, _fov = math.radians(55), _zfar = 1000, _znear = 0.1):
+        global half_width, half_height
+        self.camera_x, self.camera_y, self.camera_z = 0,0,0
+        self.camera_angle_x, self.camera_angle_y, self.camera_angle_z = 0,0,0
+        self.ar = int(_height)/int(_width)
+        half_width, half_height = int(_width/2), int(_height/2)
         self.zfar, self.znear, self.fov = _zfar, _znear, _fov
         self.width = _width
         self.height = _height
 
+    def camera_absolute(self, _camera_x, _camera_y, _camera_z, _camera_angle_x, _camera_angle_y, _camera_angle_z):
+        if _camera_x != None:
+            self.camera_x = _camera_x
+        if _camera_y != None:
+            self.camera_y = _camera_y
+        if _camera_z != None:
+            self.camera_z = _camera_z
+        if _camera_angle_x != None:
+            self.camera_angle_x = math.radians(_camera_angle_x)
+        if _camera_angle_y != None:
+            self.camera_angle_y = math.radians(_camera_angle_y)
+        if _camera_angle_z != None:
+            self.camera_angle_z = math.radians(_camera_angle_z)
+
+    def move_camera(self, _camera_x = 0, _camera_y = 0, _camera_z = 0, _camera_angle_x = 0, _camera_angle_y = 0, _camera_angle_z = 0):
+        self.camera_x, self.camera_y, self.camera_z = self.camera_x + _camera_x, self.camera_y + _camera_y, self.camera_z + _camera_z
+        self.camera_angle_x, self.camera_angle_y, self.camera_angle_z = self.camera_angle_x + math.radians(_camera_angle_x), self.camera_angle_y + math.radians(_camera_angle_y), self.camera_angle_z + math.radians(_camera_angle_z)
 
     def new_frame(self):
         frame = []
-        for wall_num in range(0,len(self.map_array)):
-            wall = self.map_array[wall_num]
-            
-            for point in range(0,len(wall)-1):
-                locals()["sp" + str(point) + str(wall_num)] = scale_point(wall[point][0],wall[point][1],wall[point][2], self.zfar, self.znear, self.fov, self.ar, self.camera_x, self.camera_y, self.camera_z , self.camera_angle_x, self.camera_angle_y, self.camera_angle_z)
-            frame.append(render_wall_from_normalised_points(locals()["sp0"+ str(wall_num)][0],locals()["sp0"+ str(wall_num)][1],locals()["sp0"+ str(wall_num)][2],locals()["sp1"+ str(wall_num)][0],locals()["sp1"+ str(wall_num)][1],locals()["sp1"+ str(wall_num)][2],locals()["sp2"+ str(wall_num)][0],locals()["sp2"+ str(wall_num)][1],locals()["sp2"+ str(wall_num)][2],wall[len(wall)-1]))
+        #self.camera_z -= 0.1
+        print(self.camera_x, self.camera_y, self.camera_z)
+        for model in self.map_array:
+            for wall_num in range(0,len(model)):
+                wall = model[wall_num]
+                for point in range(0,len(wall)-1):
+                    locals()["sp" + str(point) + str(wall_num)] = scale_point(wall[point][0],wall[point][1],wall[point][2], self.zfar, self.znear, self.fov, self.ar, self.camera_x, self.camera_y, self.camera_z , self.camera_angle_x, self.camera_angle_y, self.camera_angle_z)
+                temp_tri = render_wall_from_normalised_points(locals()["sp0"+ str(wall_num)][0],locals()["sp0"+ str(wall_num)][1],locals()["sp0"+ str(wall_num)][2],locals()["sp1"+ str(wall_num)][0],locals()["sp1"+ str(wall_num)][1],locals()["sp1"+ str(wall_num)][2],locals()["sp2"+ str(wall_num)][0],locals()["sp2"+ str(wall_num)][1],locals()["sp2"+ str(wall_num)][2],wall[len(wall)-1])
+                if temp_tri != None:
+                    frame.append(temp_tri)
         return frame
