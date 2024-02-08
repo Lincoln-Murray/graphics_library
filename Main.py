@@ -182,7 +182,14 @@ class gl:
             self.camera_angle_z = math.radians(_camera_angle_z)
 
     def move_camera(self, _camera_x = 0, _camera_y = 0, _camera_z = 0, _camera_angle_x = 0, _camera_angle_y = 0, _camera_angle_z = 0):
-        self.camera_x, self.camera_y, self.camera_z = self.camera_x + _camera_x, self.camera_y + _camera_y, self.camera_z + _camera_z
+        self.camera_z += math.cos(self.camera_angle_y) * _camera_z
+        self.camera_x += math.sin(self.camera_angle_y) * _camera_z
+        
+        self.camera_x += math.sin(self.camera_angle_y+math.pi/2) * _camera_x
+        self.camera_z += math.cos(self.camera_angle_y+math.pi/2) * _camera_x
+        
+        self.camera_y = self.camera_y + _camera_y
+        
         self.camera_angle_x, self.camera_angle_y, self.camera_angle_z = self.camera_angle_x + math.radians(_camera_angle_x), self.camera_angle_y + math.radians(_camera_angle_y), self.camera_angle_z + math.radians(_camera_angle_z)
 
     def new_frame(self):
