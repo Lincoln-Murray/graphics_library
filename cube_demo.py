@@ -29,9 +29,8 @@ def loop():
     viewport.create_rectangle(0,0,renderer.width,renderer.height, fill="white")
     triangles = renderer.new_frame()
     renderer.move_camera(_camera_x = -0.2*math.pi, _camera_angle_y = 3.6)
-    for i in range(0,len(triangles)-1):
-        points = [triangles[i][0], triangles[i][1], triangles[i][2], triangles[i][3], triangles[i][4], triangles[i][5]]
-        viewport.create_polygon(points, fill=triangles[i][-1])
+    for tri in triangles:
+        viewport.create_polygon([tri[0], tri[1], tri[2], tri[3], tri[4], tri[5]], fill=tri[-1])
     master.after(50,loop)
 
 master.after(1,loop)
