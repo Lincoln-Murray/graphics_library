@@ -52,8 +52,8 @@ def get_dot_product(x1,y1,z1,x2,y2,z2):
 def render_wall_from_normalised_points(x1_3d,y1_3d,z1_3d,x2_3d,y2_3d,z2_3d,x3_3d,y3_3d,z3_3d,colour):
     global half_width, half_height
     nx,ny,nz = get_normal_from_triangle(x1_3d,y1_3d,z1_3d,x2_3d,y2_3d,z2_3d,x3_3d,y3_3d,z3_3d)
-    #pnx,pny,pnz = get_normal_from_angle(angle_x, angle_y, angle_z)
-    #dp = get_dot_product(nx,ny,nz,pnx,pny,pnz)
+    #camera_nx, camera_ny, camera_nz = get_normal_from_angle(angle_x, angle_y, angle_z)
+    #dp = get_dot_product(nx, ny, nz, camera_nx, camera_ny, camera_nz)
     if nz <=0:
         x1_2d = x1_3d*half_width+half_width
         y1_2d = y1_3d*half_height+half_height
@@ -167,7 +167,7 @@ class gl:
         self.width = _width
         self.height = _height
 
-    def camera_absolute(self, _camera_x, _camera_y, _camera_z, _camera_angle_x, _camera_angle_y, _camera_angle_z):
+    def camera_absolute(self, _camera_x = None, _camera_y = None, _camera_z = None, _camera_angle_x = None, _camera_angle_y = None, _camera_angle_z = None):
         if _camera_x != None:
             self.camera_x = _camera_x
         if _camera_y != None:
@@ -194,8 +194,6 @@ class gl:
 
     def new_frame(self):
         frame = []
-        #self.camera_z -= 0.1
-        print(self.camera_x, self.camera_y, self.camera_z)
         for model in self.map_array:
             for wall_num in range(0,len(model)):
                 wall = model[wall_num]
