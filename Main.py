@@ -33,27 +33,9 @@ def get_normal_from_triangle(x1,y1,z1,x2,y2,z2,x3,y3,z3):
     normal_length = math.sqrt(nx*nx+ny*ny+nz*nz)
     return nx/normal_length, ny/normal_length, nz/normal_length
 
-def get_normal_from_angle(angle_x, angle_y, angle_z):
-    x, y, z = 0,0,0
-    x += math.cos(angle_z)
-    y += math.sin(angle_z)
-    x += math.cos(angle_x)
-    z += math.sin(angle_x)
-    z += math.cos(angle_y)
-    y += math.sin(angle_y)
-    return x,y,z
-
-def get_dot_product(x1,y1,z1,x2,y2,z2):
-    dp = x1*x2+y1*y2+z1*z2
-    dpx, dpy, dpz = x1*x2, y1*y2, z1*z2
-    l = math.sqrt(dpx*dpx+dpy*dpy+dpz*dpz)
-    return dp/l
-
 def render_wall_from_normalised_points(x1_3d,y1_3d,z1_3d,x2_3d,y2_3d,z2_3d,x3_3d,y3_3d,z3_3d,colour):
     global half_width, half_height
     nx,ny,nz = get_normal_from_triangle(x1_3d,y1_3d,z1_3d,x2_3d,y2_3d,z2_3d,x3_3d,y3_3d,z3_3d)
-    #camera_nx, camera_ny, camera_nz = get_normal_from_angle(angle_x, angle_y, angle_z)
-    #dp = get_dot_product(nx, ny, nz, camera_nx, camera_ny, camera_nz)
     if nz <=0:
         x1_2d = x1_3d*half_width+half_width
         y1_2d = y1_3d*half_height+half_height
@@ -63,35 +45,21 @@ def render_wall_from_normalised_points(x1_3d,y1_3d,z1_3d,x2_3d,y2_3d,z2_3d,x3_3d
         y3_2d = y3_3d*half_height+half_height
         return [int(x1_2d),int(y1_2d),int(x2_2d),int(y2_2d),int(x3_2d),int(y3_2d),colour]
 
-def rotate_point_z_axis(x,y,z, angle):
-    rx = x * math.cos(angle) - y * math.sin(angle)
-    ry = x * math.sin(angle) + y * math.cos(angle)
-    rz = z
-    return rx,ry,rz
-
-def rotate_point_y_axis(x,y,z, angle):
-    rx = x * math.cos(angle) - z * math.sin(angle)
-    ry = y
-    rz = x * math.sin(angle) + z * math.cos(angle)
-    return rx,ry,rz
-
-def rotate_point_x_axis(x,y,z, angle):
-    rx = x
-    ry = y * math.cos(angle) - z * math.sin(angle)
-    rz = y * math.sin(angle) + z * math.cos(angle)
-    return rx,ry,rz
+def rotate_point(axisone,axistwo,raxis, angle):
+    raxisone = axisone * math.cos(angle) - axistwo * math.sin(angle)
+    raxistwo = axisone * math.sin(angle) + axistwo * math.cos(angle)
+    return raxisone,raxistwo,raxis
 
 def scale_point(x,y,z, zfar, znear, fov, ar, camera_x, camera_y, camera_z ,camera_angle_x, camera_angle_y, camera_angle_z):
-    x,y,z = rotate_point_z_axis(x,y,z, camera_angle_z)
-    x,y,z = rotate_point_y_axis(x,y,z, camera_angle_y)
-    x,y,z = rotate_point_x_axis(x,y,z, camera_angle_x)
+    x,y,z = rotate_point(x,y,z, camera_angle_z)
+    x,y,z = rotate_point(z,x,y, camera_angle_y)
+    x,y,z = rotate_point(y,z,x, camera_angle_x)
     x,y,z = camera_x+x,camera_y+y,camera_z+z
     if z != 0:
         x = (ar*(1/math.tan(fov/2))*x)/z
         y = ((1/math.tan(fov/2))*y)/z
         z = z*(zfar/(zfar-znear))-((zfar*znear)/(zfar-znear))
     return [x,y,z]
-
 
 
 class object:
@@ -184,10 +152,8 @@ class gl:
     def move_camera(self, _camera_x = 0, _camera_y = 0, _camera_z = 0, _camera_angle_x = 0, _camera_angle_y = 0, _camera_angle_z = 0):
         self.camera_z += math.cos(self.camera_angle_y) * _camera_z
         self.camera_x += math.sin(self.camera_angle_y) * _camera_z
-        
         self.camera_x += math.sin(self.camera_angle_y+math.pi/2) * _camera_x
         self.camera_z += math.cos(self.camera_angle_y+math.pi/2) * _camera_x
-        
         self.camera_y = self.camera_y + _camera_y
         
         self.camera_angle_x, self.camera_angle_y, self.camera_angle_z = self.camera_angle_x + math.radians(_camera_angle_x), self.camera_angle_y + math.radians(_camera_angle_y), self.camera_angle_z + math.radians(_camera_angle_z)
