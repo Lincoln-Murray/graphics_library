@@ -3,9 +3,9 @@ import math
 from tkinter.ttk import *
 from tkinter import *
 
-model = 'models/cube.obj'
+model = 'models/teapot.obj'
 
-cube = Main.object(model,0,0,0,45,45, 0, None)
+cube = Main.object(model,0,-1,0,180,0, 0, None)
 renderer = Main.gl(1920,1080, math.radians(55), 1000, 0.1)
 renderer.map_array.append(cube.get_object())
 speed = -0.4

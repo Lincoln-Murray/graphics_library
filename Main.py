@@ -71,27 +71,39 @@ class object:
             if line[0] == 'v' and line[1] == ' ':
                 count+=1
                 split = line.split()
-                while split[1][-1] == '0' or split[1][-1] == '.':
-                    if split[1][-1] == '.':
-                        split[1] = split[1][:-1]
-                        break
+                if len(split[1]) >1:
+                    if split[1][0] == '-' and split[1][1] == '0' and len(split[1]) == 2:
+                        split[1] = '0'
                     else:
-                        split[1] = split[1][:-1]
-                while split[2][-1] == '0' or split[2][-1] == '.':
-                    if split[2][-1] == '.':
-                        split[2] = split[2][:-1]
-                        break
+                        while split[1][-1] == '0' or split[1][-1] == '.':
+                            if split[1][-1] == '.':
+                                split[1] = split[1][:-1]
+                                break
+                            else:
+                                split[1] = split[1][:-1]
+                if len(split[2]) >1:
+                    if split[2][0] == '-' and split[2][1] == '0' and len(split[2]) == 2:
+                        split[2] = '0'
                     else:
-                        split[2] = split[2][:-1]
-                while split[3][-1] == '0' or split[3][-1] == '.':
-                    if split[3][-1] == '.':
-                        split[3] = split[3][:-1]
-                        break
+                        while split[2][-1] == '0' or split[2][-1] == '.':
+                            if split[2][-1] == '.':
+                                split[2] = split[2][:-1]
+                                break
+                            else:
+                                split[2] = split[2][:-1]
+                if len(split[3]) >1:
+                    if split[3][0] == '-' and split[3][1] == '0' and len(split[3]) == 2:
+                        split[3] = '0'
                     else:
-                        split[3] = split[3][:-1]
-                split[1], split[2], split[3] = rotate_point_z_axis(float(split[1]), float(split[2]), float(split[3]), az)
-                split[1], split[2], split[3] = rotate_point_y_axis(float(split[1]), float(split[2]), float(split[3]), ay)
-                split[1], split[2], split[3] = rotate_point_x_axis(float(split[1]), float(split[2]), float(split[3]), ax)
+                        while split[3][-1] == '0' or split[3][-1] == '.':
+                            if split[3][-1] == '.':
+                                split[3] = split[3][:-1]
+                                break
+                            else:
+                                split[3] = split[3][:-1]
+                split[1], split[2], split[3] = rotate_point(float(split[1]), float(split[2]), float(split[3]), az)
+                split[1], split[2], split[3] = rotate_point(float(split[3]), float(split[1]), float(split[2]), ay)
+                split[1], split[2], split[3] = rotate_point(float(split[2]), float(split[3]), float(split[1]), ax)
                 locals()["v"+str(count)] = [float(split[1]) + x, float(split[2]) - y, float(split[3]) + z]
             elif line[0] == 'f' and line[1] == ' ':
                 split = line.split()
