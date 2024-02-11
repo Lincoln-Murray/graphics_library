@@ -43,7 +43,9 @@ def render_wall_from_normalised_points(x1_3d,y1_3d,z1_3d,x2_3d,y2_3d,z2_3d,x3_3d
         y2_2d = y2_3d*half_height+half_height
         x3_2d = x3_3d*half_width+half_width
         y3_2d = y3_3d*half_height+half_height
-        return [int(x1_2d),int(y1_2d),int(x2_2d),int(y2_2d),int(x3_2d),int(y3_2d),colour]
+        z_list = [z1_3d, z2_3d, z3_3d]
+        z_list.sort(reverse=True)
+        return [int(x1_2d),int(y1_2d),int(x2_2d),int(y2_2d),int(x3_2d),int(y3_2d),z_list[0],colour]
 
 def rotate_point(axisone,axistwo,raxis, angle):
     raxisone = axisone * math.cos(angle) - axistwo * math.sin(angle)
@@ -180,4 +182,5 @@ class gl:
                 temp_tri = render_wall_from_normalised_points(locals()["sp0"+ str(wall_num)][0],locals()["sp0"+ str(wall_num)][1],locals()["sp0"+ str(wall_num)][2],locals()["sp1"+ str(wall_num)][0],locals()["sp1"+ str(wall_num)][1],locals()["sp1"+ str(wall_num)][2],locals()["sp2"+ str(wall_num)][0],locals()["sp2"+ str(wall_num)][1],locals()["sp2"+ str(wall_num)][2],wall[len(wall)-1])
                 if temp_tri != None:
                     frame.append(temp_tri)
+        frame.sort(key=lambda l : l[6], reverse= True)
         return frame
