@@ -3,9 +3,9 @@ import math
 from tkinter.ttk import *
 from tkinter import *
 
-model = 'models/teapot.obj'
+model = 'models/bcube.obj'
 
-cube = Main.object(model,0,-1,0,180,0, 0, None)
+cube = Main.object(model,0,-1,0,45,45, 0, None)
 renderer = Main.gl(1920,1080, math.radians(55), 1000, 0.1)
 renderer.map_array.append(cube.get_object())
 speed = -0.4
@@ -25,12 +25,14 @@ frame.pack(anchor=SW, side=LEFT)
 viewport = Canvas(frame, width=renderer.width, height=renderer.height)
 viewport.pack(side=TOP)
 
+renderer.view_style(True)
+
 def loop():
     viewport.create_rectangle(0,0,renderer.width,renderer.height, fill="white")
     triangles = renderer.new_frame()
     renderer.move_camera(_camera_x = -0.2*math.pi, _camera_angle_y = 3.6)
     for tri in triangles:
-        viewport.create_polygon([tri[0], tri[1], tri[2], tri[3], tri[4], tri[5]], fill=tri[-1])
+        viewport.create_polygon([tri[0], tri[1], tri[2], tri[3], tri[4], tri[5]],outline='black', fill=tri[-1])
     master.after(50,loop)
 
 master.after(1,loop)

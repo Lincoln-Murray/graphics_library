@@ -33,10 +33,16 @@ def get_normal_from_triangle(x1,y1,z1,x2,y2,z2,x3,y3,z3):
     normal_length = math.sqrt(nx*nx+ny*ny+nz*nz)
     return nx/normal_length, ny/normal_length, nz/normal_length
 
-def render_wall_from_normalised_points(x1_3d,y1_3d,z1_3d,x2_3d,y2_3d,z2_3d,x3_3d,y3_3d,z3_3d,colour):
+def render_wall_from_normalised_points(x1_3d,y1_3d,z1_3d,x2_3d,y2_3d,z2_3d,x3_3d,y3_3d,z3_3d,colour,_gl):
     global half_width, half_height
-    nx,ny,nz = get_normal_from_triangle(x1_3d,y1_3d,z1_3d,x2_3d,y2_3d,z2_3d,x3_3d,y3_3d,z3_3d)
-    if nz <=0:
+    if not _gl.wiremesh:
+        nx,ny,nz = get_normal_from_triangle(x1_3d,y1_3d,z1_3d,x2_3d,y2_3d,z2_3d,x3_3d,y3_3d,z3_3d)
+    else:
+        nz = -1
+        colour = ''
+    behind = False
+
+    if nz <=0 and not behind:
         x1_2d = x1_3d*half_width+half_width
         y1_2d = y1_3d*half_height+half_height
         x2_2d = x2_3d*half_width+half_width
@@ -148,6 +154,7 @@ class gl:
         self.zfar, self.znear, self.fov = _zfar, _znear, _fov
         self.width = _width
         self.height = _height
+        self.wiremesh = False
 
     def camera_absolute(self, _camera_x = None, _camera_y = None, _camera_z = None, _camera_angle_x = None, _camera_angle_y = None, _camera_angle_z = None):
         if _camera_x != None:
@@ -172,14 +179,18 @@ class gl:
         
         self.camera_angle_x, self.camera_angle_y, self.camera_angle_z = self.camera_angle_x + math.radians(_camera_angle_x), self.camera_angle_y + math.radians(_camera_angle_y), self.camera_angle_z + math.radians(_camera_angle_z)
 
+    def view_style(self, _wiremesh = False):
+        self.wiremesh = _wiremesh
+
     def new_frame(self):
         frame = []
+        
         for model in self.map_array:
             for wall_num in range(0,len(model)):
                 wall = model[wall_num]
                 for point in range(0,len(wall)-1):
                     locals()["sp" + str(point) + str(wall_num)] = scale_point(wall[point][0],wall[point][1],wall[point][2], self.zfar, self.znear, self.fov, self.ar, self.camera_x, self.camera_y, self.camera_z , self.camera_angle_x, self.camera_angle_y, self.camera_angle_z)
-                temp_tri = render_wall_from_normalised_points(locals()["sp0"+ str(wall_num)][0],locals()["sp0"+ str(wall_num)][1],locals()["sp0"+ str(wall_num)][2],locals()["sp1"+ str(wall_num)][0],locals()["sp1"+ str(wall_num)][1],locals()["sp1"+ str(wall_num)][2],locals()["sp2"+ str(wall_num)][0],locals()["sp2"+ str(wall_num)][1],locals()["sp2"+ str(wall_num)][2],wall[len(wall)-1])
+                temp_tri = render_wall_from_normalised_points(locals()["sp0"+ str(wall_num)][0],locals()["sp0"+ str(wall_num)][1],locals()["sp0"+ str(wall_num)][2],locals()["sp1"+ str(wall_num)][0],locals()["sp1"+ str(wall_num)][1],locals()["sp1"+ str(wall_num)][2],locals()["sp2"+ str(wall_num)][0],locals()["sp2"+ str(wall_num)][1],locals()["sp2"+ str(wall_num)][2],wall[len(wall)-1], self)
                 if temp_tri != None:
                     frame.append(temp_tri)
         frame.sort(key=lambda l : l[6], reverse= True)
