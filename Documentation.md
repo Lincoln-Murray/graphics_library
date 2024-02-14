@@ -1,2 +1,0 @@
-***Disclaimer***
-This documentation may not always be up to date, infact it probably rarely be but it should give a rough guideline of how to effect use and implement this graphics library into any python project
