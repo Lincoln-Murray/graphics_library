@@ -5,9 +5,9 @@ from tkinter import *
 
 model = 'models/bcube.obj'
 
-cube = Main.object(model,0,-1,0,45,45, 0, None)
 renderer = Main.gl(1920,1080, math.radians(55), 1000, 0.1)
-renderer.map_array.append(cube.get_object())
+cube = Main.object(renderer,model,1,1,0,0,0, 0, None)
+
 speed = -0.4
 hwstr = str(renderer.width) + 'x' + str(renderer.height)
 ar = int(renderer.height)/int(renderer.width)
@@ -19,20 +19,30 @@ master = Tk()
 master.geometry(hwstr)
 master.title("Cube demo")
 
-frame = Frame(master, width=renderer.width, height=renderer.height, bg="black")
+frame = Frame(master, width = renderer.width, height=renderer.height, bg="black")
 frame.focus_set()
 frame.pack(anchor=SW, side=LEFT)
 viewport = Canvas(frame, width=renderer.width, height=renderer.height)
 viewport.pack(side=TOP)
 
-renderer.view_style(True)
-
+renderer.view_style(False)
+a=0
+a1=0
+a2=0
 def loop():
-    viewport.create_rectangle(0,0,renderer.width,renderer.height, fill="white")
+    global a, a1, a2
+    viewport.create_rectangle(0,0,renderer.width,renderer.height, fill="black")
     triangles = renderer.new_frame()
-    renderer.move_camera(_camera_x = -0.2*math.pi, _camera_angle_y = 3.6)
+    a+=1
+    a1+=1.5
+    a2=a+a1
+    #cube.set_properties(renderer,0,0,0,a1,a,a2)
+
+    #translate_absolute(renderer,0,0,0,0,90,0)
+    #print("\n")
+    renderer.move_camera(_camera_angle_z = 0, _camera_angle_y=2)
     for tri in triangles:
-        viewport.create_polygon([tri[0], tri[1], tri[2], tri[3], tri[4], tri[5]],outline='black', fill=tri[-1])
+        viewport.create_polygon([tri[0], tri[1], tri[2], tri[3], tri[4], tri[5]],outline=tri[-2], fill=tri[-1])
     master.after(50,loop)
 
 master.after(1,loop)

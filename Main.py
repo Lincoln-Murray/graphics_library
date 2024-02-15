@@ -2,11 +2,6 @@ import math
 import random
 
 half_height, half_width = 1,1
-object_array = []
-
-def add_triangle(v1, v2, v3, colour):
-    tri = [v1, v2, v3, colour]
-    object_array.append(tri)
 
 def random_colour():
     hexlen = 0
@@ -18,12 +13,49 @@ def random_colour():
 
 def load_mtl(file_name):
     file = open(file_name, "rt")
-    materials = []
+    materials = {}
+    current_name = None
+    current_material = []
     for line in file:
-        if "# Material Count:" in line:
-            num_materials = line.split[-1]
         if "newmtl" in line:
-            current_material = line.split[-1]
+            if current_name != None:
+                materials[current_name] = current_material
+            current_name = line.split()[-1]
+        elif 'Ka' in line:
+            split = line.split()
+            if len(split[1]) >1:
+                if split[1][0] == '-' and split[1][1] == '0' and len(split[1]) == 2:
+                    split[1] = '0'
+                else:
+                    while split[1][-1] == '0' or split[1][-1] == '.':
+                        if split[1][-1] == '.':
+                            split[1] = split[1][:-1]
+                            break
+                        else:
+                            split[1] = split[1][:-1]
+            if len(split[2]) >1:
+                if split[2][0] == '-' and split[2][1] == '0' and len(split[2]) == 2:
+                    split[2] = '0'
+                else:
+                    while split[2][-1] == '0' or split[2][-1] == '.':
+                        if split[2][-1] == '.':
+                            split[2] = split[2][:-1]
+                            break
+                        else:
+                            split[2] = split[2][:-1]
+            if len(split[3]) >1:
+                if split[3][0] == '-' and split[3][1] == '0' and len(split[3]) == 2:
+                    split[3] = '0'
+                else:
+                    while split[3][-1] == '0' or split[3][-1] == '.':
+                        if split[3][-1] == '.':
+                            split[3] = split[3][:-1]
+                            break
+                        else:
+                            split[3] = split[3][:-1]
+            current_material.append('#%02x%02x%02x' % (int(float(split[1])*255), int(float(split[2])*255), int(float(split[3])*255)))
+    if current_name != None:
+        materials[current_name] = current_material
     return materials
 
 def get_normal_from_triangle(x1,y1,z1,x2,y2,z2,x3,y3,z3):
@@ -31,18 +63,22 @@ def get_normal_from_triangle(x1,y1,z1,x2,y2,z2,x3,y3,z3):
     lx2, ly2, lz2 = x3 - x1, y3 - y1, z3 - z1
     nx,ny,nz = ly1 * lz2 - lz1 * ly2, lz1 * lx2 - lx1 * lz2, lx1 * ly2 - ly1 * lx2
     normal_length = math.sqrt(nx*nx+ny*ny+nz*nz)
-    return nx/normal_length, ny/normal_length, nz/normal_length
+    if normal_length == 0:
+        return 0,0,0
+    else:
+        return nx/normal_length, ny/normal_length, nz/normal_length
 
 def render_wall_from_normalised_points(x1_3d,y1_3d,z1_3d,x2_3d,y2_3d,z2_3d,x3_3d,y3_3d,z3_3d,colour,_gl):
     global half_width, half_height
     if not _gl.wiremesh:
         nx,ny,nz = get_normal_from_triangle(x1_3d,y1_3d,z1_3d,x2_3d,y2_3d,z2_3d,x3_3d,y3_3d,z3_3d)
+        outline = ''
     else:
         nz = -1
         colour = ''
-    behind = False
+        outline = 'black'
 
-    if nz <=0 and not behind:
+    if nz <=0:
         x1_2d = x1_3d*half_width+half_width
         y1_2d = y1_3d*half_height+half_height
         x2_2d = x2_3d*half_width+half_width
@@ -51,7 +87,7 @@ def render_wall_from_normalised_points(x1_3d,y1_3d,z1_3d,x2_3d,y2_3d,z2_3d,x3_3d
         y3_2d = y3_3d*half_height+half_height
         z_list = [z1_3d, z2_3d, z3_3d]
         z_list.sort(reverse=True)
-        return [int(x1_2d),int(y1_2d),int(x2_2d),int(y2_2d),int(x3_2d),int(y3_2d),z_list[0],colour]
+        return [int(x1_2d),int(y1_2d),int(x2_2d),int(y2_2d),int(x3_2d),int(y3_2d),z_list[0],outline,colour]
 
 def rotate_point(axisone,axistwo,raxis, angle):
     raxisone = axisone * math.cos(angle) - axistwo * math.sin(angle)
@@ -71,10 +107,13 @@ def scale_point(x,y,z, zfar, znear, fov, ar, camera_x, camera_y, camera_z ,camer
 
 
 class object:
-    def __init__(self, _model, x = 0, y = 0 , z = 0, ax = 0, ay = 0, az = 0, colour = None):
+    def __init__(self, _gl, _model, x = 0, y = 0 , z = 0, ax = 0, ay = 0, az = 0, colour = None):
         ax, ay, az = math.radians(ax), math.radians(ay), math.radians(az)
         model = open(_model, 'rt')
         count = 0
+        self.object_array = []
+        current_material = None
+        materials = load_mtl(_model[:-3]+ 'mtl')
         for line in model:
             if line[0] == 'v' and line[1] == ' ':
                 count+=1
@@ -132,16 +171,65 @@ class object:
                                     vn += char
                     if i != 0:
                         locals()["fv" + str(i)] = locals()["v"+str(v)]
-                if colour == None:
+                if colour == None and current_material == None:
                     new_colour = random_colour()
                 else:
-                    new_colour = colour
+                    print(current_material)
+                    if colour != None:
+                        new_colour = colour
+                    else:
+                        new_colour = current_material[0]
                 for p in range(2,len(split)-1):
-                    add_triangle(locals()["fv1"], locals()["fv"+str(p)], locals()["fv"+str(p+1)], new_colour)
+                    self.object_array.append([locals()["fv1"], locals()["fv"+str(p)], locals()["fv"+str(p+1)], new_colour])
+            elif line.split()[0] == 'usemtl':
+                current_material = materials[line.split()[1]]
+        _gl.map_array.append(self.object_array)
+        self.map_position = _gl.map_array.index(self.object_array)
 
-    def get_object(self):
-        global object_array
-        return object_array
+#    def translate_absolute(self, _gl, _x=0, _y=0, _z=0, _angle_x=0, _angle_y=0, _angle_z=0):
+#        _angle_x, _angle_y, _angle_z = math.radians(_angle_x), math.radians(_angle_y), math.radians(_angle_z)
+#        new_object_array = []
+#        for tri in self.object_array:
+#            new_tri = []
+#            print(tri)
+#            for point in tri:
+#                print(point)
+#                if point != tri[-1]:
+#                    x, y, z = point[0], point[1], point[2]
+#                    x, y, z = rotate_point(x, y, z, _angle_z)
+#                    z, x, y = rotate_point(z, x, y, _angle_y)
+#                    y, z, x = rotate_point(y, z, x, _angle_x)
+#                    point[0], point[1], point[2] = x+_x, y-_y, z+_z
+#                new_tri.append(point)
+#            print("\n")
+#            new_object_array.append(new_tri)
+#        print("\n\n\n\n")
+#        self.object_array = new_object_array
+#        del _gl.map_array[self.map_position]
+#        _gl.map_array.append(self.object_array)
+#        self.map_position = _gl.map_array.index(self.object_array)
+
+#    def set_properties(self, _gl, x = 0, y = 0 , z = 0, ax = 0, ay = 0, az = 0, colour = None):
+#        ax, ay, az = math.radians(ax), math.radians(ay), math.radians(az)
+#        count = 0
+#        new_object_array = []
+#        for tri in self.object_array:
+#            new_tri = []
+#            for vertice in tri:
+#                if vertice != tri[-1]:
+#                    split = [0,vertice[0],vertice[1],vertice[2]]
+#                    split[1], split[2], split[3] = rotate_point(float(split[1]), float(split[2]), float(split[3]), az)
+#                    split[1], split[2], split[3] = rotate_point(float(split[3]), float(split[1]), float(split[2]), ay)
+#                    split[1], split[2], split[3] = rotate_point(float(split[2]), float(split[3]), float(split[1]), ax)
+#                    new_tri.append([float(split[1]) + x, float(split[2]) - y, float(split[3]) + z,tri[-1]])
+#            new_object_array.append(new_tri)
+#        self.object_array = new_object_array
+#        print(self.object_array)
+#        print('\n\n\n\n')
+#        del _gl.map_array[self.map_position]
+#        _gl.map_array.append(self.object_array)
+#        self.map_position = _gl.map_array.index(self.object_array)
+
 
 class gl:
     map_array = []    
@@ -173,8 +261,8 @@ class gl:
     def move_camera(self, _camera_x = 0, _camera_y = 0, _camera_z = 0, _camera_angle_x = 0, _camera_angle_y = 0, _camera_angle_z = 0):
         self.camera_z += math.cos(self.camera_angle_y) * _camera_z
         self.camera_x += math.sin(self.camera_angle_y) * _camera_z
-        self.camera_x += math.sin(self.camera_angle_y+math.pi/2) * _camera_x
-        self.camera_z += math.cos(self.camera_angle_y+math.pi/2) * _camera_x
+        self.camera_x += math.sin(self.camera_angle_y+1.5708) * _camera_x
+        self.camera_z += math.cos(self.camera_angle_y+1.5708) * _camera_x
         self.camera_y = self.camera_y + _camera_y
         
         self.camera_angle_x, self.camera_angle_y, self.camera_angle_z = self.camera_angle_x + math.radians(_camera_angle_x), self.camera_angle_y + math.radians(_camera_angle_y), self.camera_angle_z + math.radians(_camera_angle_z)
