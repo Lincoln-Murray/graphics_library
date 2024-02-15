@@ -22,5 +22,6 @@
 ### Done ✓
 
 * [X] Implement camera movement
+* [X] Basic shadows on surfaces
 * [X] Finish ReadMe.md
   * [X] Add documentation
