@@ -11,6 +11,14 @@ def random_colour():
         hexlen = len(hex_number)
     return hex_number
 
+def dim_colour(colour, scale_factor):
+    hex_colour = colour[1:]
+    r, g, b = int(hex_colour[:2], 16), int(hex_colour[2:4], 16), int(hex_colour[4:], 16)
+    r = max(0, min(255, int(r * scale_factor)))
+    g = max(0, min(255, int(g * scale_factor)))
+    b = max(0, min(255, int(b * scale_factor)))
+    return '#%02x%02x%02x' % (r,g,b)
+
 def load_mtl(file_name):
     file = open(file_name, "rt")
     materials = {}
@@ -72,11 +80,13 @@ def render_wall_from_normalised_points(x1_3d,y1_3d,z1_3d,x2_3d,y2_3d,z2_3d,x3_3d
     global half_width, half_height
     if not _gl.wiremesh:
         nx,ny,nz = get_normal_from_triangle(x1_3d,y1_3d,z1_3d,x2_3d,y2_3d,z2_3d,x3_3d,y3_3d,z3_3d)
+        if nz <= 0:
+            colour = dim_colour(colour,-nz)
         outline = ''
     else:
         nz = -1
         colour = ''
-        outline = 'black'
+        outline = 'white'
 
     if nz <=0:
         x1_2d = x1_3d*half_width+half_width
@@ -115,7 +125,9 @@ class object:
         current_material = None
         materials = load_mtl(_model[:-3]+ 'mtl')
         for line in model:
-            if line[0] == 'v' and line[1] == ' ':
+            if line == '\n':
+                pass
+            elif line[0] == 'v' and line[1] == ' ':
                 count+=1
                 split = line.split()
                 if len(split[1]) >1:
@@ -174,7 +186,6 @@ class object:
                 if colour == None and current_material == None:
                     new_colour = random_colour()
                 else:
-                    print(current_material)
                     if colour != None:
                         new_colour = colour
                     else:
