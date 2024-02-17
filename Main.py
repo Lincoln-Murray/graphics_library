@@ -29,6 +29,7 @@ def load_mtl(file_name):
             if current_name != None:
                 materials[current_name] = current_material
             current_name = line.split()[-1]
+            current_material = []
         elif 'Ka' in line:
             split = line.split()
             if len(split[1]) >1:
