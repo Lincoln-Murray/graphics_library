@@ -4,9 +4,12 @@ from tkinter.ttk import *
 from tkinter import *
 
 model = 'models/teapot.obj'
+model_2 = 'models/cube.obj'
 
 renderer = Main.gl(1920,1080, math.radians(55), 1000, 0.1)
-cube = Main.object(renderer,model,-2,-1,0,0,45,180, None)
+cube = Main.object(renderer,model,-4.5,-1,0,0,45,180, 1, 1, 1, None)
+bcube = Main.object(renderer,model,4.5,-1,0,0,315,180, 1, 1, 1, None)
+ccube = Main.object(renderer,model_2,0,0,0,0,35,0, 1, 1, 1, None)
 
 speed = -0.4
 hwstr = str(renderer.width) + 'x' + str(renderer.height)

@@ -117,7 +117,7 @@ def scale_point(x,y,z, zfar, znear, fov, ar, camera_x, camera_y, camera_z ,camer
 
 
 class object:
-    def __init__(self, _gl, _model, x = 0, y = 0 , z = 0, ax = 0, ay = 0, az = 0, colour = None):
+    def __init__(self, _gl, _model, x = 0, y = 0 , z = 0, ax = 0, ay = 0, az = 0, scale_x = 1, scale_y = 1, scale_z = 1,colour = None):
         ax, ay, az = math.radians(ax), math.radians(ay), math.radians(az)
         model = open(_model, 'rt')
         count = 0
@@ -163,7 +163,7 @@ class object:
                 split[1], split[2], split[3] = rotate_point(float(split[1]), float(split[2]), float(split[3]), az)
                 split[1], split[2], split[3] = rotate_point(float(split[3]), float(split[1]), float(split[2]), ay)
                 split[1], split[2], split[3] = rotate_point(float(split[2]), float(split[3]), float(split[1]), ax)
-                locals()["v"+str(count)] = [float(split[1]) + x, float(split[2]) - y, float(split[3]) + z]
+                locals()["v"+str(count)] = [float(split[1]*scale_x) + x, float(split[2]*scale_y) - y, float(split[3]*scale_z) + z]
             elif line[0] == 'f' and line[1] == ' ':
                 split = line.split()
                 for i in range(0, len(split)):
