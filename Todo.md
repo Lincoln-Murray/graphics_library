@@ -3,6 +3,7 @@
 ### Todo
 
 * [ ] Use precalculated normal
+- [ ] Work on individual object rotation
 * [ ] Support other file formats
   * [ ] Stl
 
@@ -11,13 +12,19 @@
   - [ ] Optimise function calls
 
 ### In Progress
+- [ ] Render to file
+  - [ ] rasterization
+  - [ ] export to svg
+  - [ ] write to binary files
+  - [ ] export to jpg
+  - [ ] export to mp4
 
-- [ ] Work on individual object rotation
 - [ ] Add Mtl support
 
   - [X] colouring
   - [ ] shading
   - [ ] textures
+  - [ ] reflectivity
 
 ### Done ✓
 
