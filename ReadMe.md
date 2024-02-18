@@ -7,7 +7,7 @@
 + [Getting Started](#getting_started)
 + [Usage](#usage)
 
-## About `<a name = "about"></a>`
+## <a name = "about">About<a/>
 
  This is just a little project I work on
  in my free time. Mainly for easy access
@@ -27,11 +27,11 @@
 
  Happy Coding!
 
-## Getting Started `<a name = "getting_started"></a>`
+## <a name = "getting_started">Getting Started</a>
 
 To get this library running download the Main.py file and put it into your projects folder, then you need to just import it like you would any other Python3 library(by whatever the filename is). That's it, then you can create instances of the classes to use the library/module(whatever you want to call it).
 
-## Usage `<a name = "usage"></a>`
+## <a name = "usage">Usage</a>
 
 ### Initiating the library:
 
