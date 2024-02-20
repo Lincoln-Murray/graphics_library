@@ -117,9 +117,63 @@ def scale_point(x,y,z, zfar, znear, fov, ar, camera_x, camera_y, camera_z ,camer
         z = z*(zfar/(zfar-znear))-((zfar*znear)/(zfar-znear))
     return [x,y,z]
 
+class gl:
+    map_array = []    
+    def __init__(self, _width = 1920, _height = 1080, _fov = math.radians(55), _zfar = 1000, _znear = 0.1):
+        global half_width, half_height
+        self.camera_x, self.camera_y, self.camera_z = 0,0,0
+        self.camera_angle_x, self.camera_angle_y, self.camera_angle_z = 0,0,0
+        self.ar = int(_height)/int(_width)
+        half_width, half_height = int(_width/2), int(_height/2)
+        self.zfar, self.znear, self.fov = _zfar, _znear, _fov
+        self.width = _width
+        self.height = _height
+        self.wiremesh = False
+        self.r, self.g, self.b = 1,1,1
 
-class object:
-    def __init__(self, _gl, _model, x = 0, y = 0 , z = 0, ax = 0, ay = 0, az = 0, scale_x = 1, scale_y = 1, scale_z = 1,colour = None):
+    def camera_absolute(self, _camera_x = None, _camera_y = None, _camera_z = None, _camera_angle_x = None, _camera_angle_y = None, _camera_angle_z = None):
+        if _camera_x != None:
+            self.camera_x = _camera_x
+        if _camera_y != None:
+            self.camera_y = _camera_y
+        if _camera_z != None:
+            self.camera_z = _camera_z
+        if _camera_angle_x != None:
+            self.camera_angle_x = math.radians(_camera_angle_x)
+        if _camera_angle_y != None:
+            self.camera_angle_y = math.radians(_camera_angle_y)
+        if _camera_angle_z != None:
+            self.camera_angle_z = math.radians(_camera_angle_z)
+
+    def move_camera(self, _camera_x = 0, _camera_y = 0, _camera_z = 0, _camera_angle_x = 0, _camera_angle_y = 0, _camera_angle_z = 0):
+        self.camera_z += math.cos(self.camera_angle_y) * _camera_z
+        self.camera_x += math.sin(self.camera_angle_y) * _camera_z
+        self.camera_x += math.sin(self.camera_angle_y+1.5708) * _camera_x
+        self.camera_z += math.cos(self.camera_angle_y+1.5708) * _camera_x
+        self.camera_y = self.camera_y + _camera_y
+        
+        self.camera_angle_x, self.camera_angle_y, self.camera_angle_z = self.camera_angle_x + math.radians(_camera_angle_x), self.camera_angle_y + math.radians(_camera_angle_y), self.camera_angle_z + math.radians(_camera_angle_z)
+
+    def view_style(self, _wiremesh = False, _r = 1, _g = 1, _b = 1):
+        self.r, self.g, self.b = _r, _g, _b
+        self.wiremesh = _wiremesh
+
+    def new_frame(self):
+        frame = []
+        
+        for model in self.map_array:
+            for wall_num in range(0,len(model)):
+                wall = model[wall_num]
+                for point in range(0,len(wall)-1):
+                    locals()["sp" + str(point) + str(wall_num)] = scale_point(wall[point][0],wall[point][1],wall[point][2], self.zfar, self.znear, self.fov, self.ar, self.camera_x, self.camera_y, self.camera_z , self.camera_angle_x, self.camera_angle_y, self.camera_angle_z)
+                temp_tri = render_wall_from_normalised_points(locals()["sp0"+ str(wall_num)][0],locals()["sp0"+ str(wall_num)][1],locals()["sp0"+ str(wall_num)][2],locals()["sp1"+ str(wall_num)][0],locals()["sp1"+ str(wall_num)][1],locals()["sp1"+ str(wall_num)][2],locals()["sp2"+ str(wall_num)][0],locals()["sp2"+ str(wall_num)][1],locals()["sp2"+ str(wall_num)][2],wall[len(wall)-1], self)
+                if temp_tri != None:
+                    frame.append(temp_tri)
+        frame.sort(key=lambda l : l[6], reverse= True)
+        return frame
+
+class object(gl):
+    def __init__(self, _model, x = 0, y = 0 , z = 0, ax = 0, ay = 0, az = 0, scale_x = 1, scale_y = 1, scale_z = 1,colour = None):
         ax, ay, az = math.radians(ax), math.radians(ay), math.radians(az)
         model = open(_model, 'rt')
         count = 0
@@ -196,8 +250,8 @@ class object:
                     self.object_array.append([locals()["fv1"], locals()["fv"+str(p)], locals()["fv"+str(p+1)], new_colour])
             elif line.split()[0] == 'usemtl':
                 current_material = materials[line.split()[1]]
-        _gl.map_array.append(self.object_array)
-        self.map_position = _gl.map_array.index(self.object_array)
+        super().map_array.append(self.object_array)
+        self.map_position = super().map_array.index(self.object_array)
 
 #    def translate_absolute(self, _gl, _x=0, _y=0, _z=0, _angle_x=0, _angle_y=0, _angle_z=0):
 #        _angle_x, _angle_y, _angle_z = math.radians(_angle_x), math.radians(_angle_y), math.radians(_angle_z)
@@ -242,59 +296,3 @@ class object:
 #        del _gl.map_array[self.map_position]
 #        _gl.map_array.append(self.object_array)
 #        self.map_position = _gl.map_array.index(self.object_array)
-
-
-class gl:
-    map_array = []    
-    def __init__(self, _width = 1920, _height = 1080, _fov = math.radians(55), _zfar = 1000, _znear = 0.1):
-        global half_width, half_height
-        self.camera_x, self.camera_y, self.camera_z = 0,0,0
-        self.camera_angle_x, self.camera_angle_y, self.camera_angle_z = 0,0,0
-        self.ar = int(_height)/int(_width)
-        half_width, half_height = int(_width/2), int(_height/2)
-        self.zfar, self.znear, self.fov = _zfar, _znear, _fov
-        self.width = _width
-        self.height = _height
-        self.wiremesh = False
-        self.r, self.g, self.b = 1,1,1
-
-    def camera_absolute(self, _camera_x = None, _camera_y = None, _camera_z = None, _camera_angle_x = None, _camera_angle_y = None, _camera_angle_z = None):
-        if _camera_x != None:
-            self.camera_x = _camera_x
-        if _camera_y != None:
-            self.camera_y = _camera_y
-        if _camera_z != None:
-            self.camera_z = _camera_z
-        if _camera_angle_x != None:
-            self.camera_angle_x = math.radians(_camera_angle_x)
-        if _camera_angle_y != None:
-            self.camera_angle_y = math.radians(_camera_angle_y)
-        if _camera_angle_z != None:
-            self.camera_angle_z = math.radians(_camera_angle_z)
-
-    def move_camera(self, _camera_x = 0, _camera_y = 0, _camera_z = 0, _camera_angle_x = 0, _camera_angle_y = 0, _camera_angle_z = 0):
-        self.camera_z += math.cos(self.camera_angle_y) * _camera_z
-        self.camera_x += math.sin(self.camera_angle_y) * _camera_z
-        self.camera_x += math.sin(self.camera_angle_y+1.5708) * _camera_x
-        self.camera_z += math.cos(self.camera_angle_y+1.5708) * _camera_x
-        self.camera_y = self.camera_y + _camera_y
-        
-        self.camera_angle_x, self.camera_angle_y, self.camera_angle_z = self.camera_angle_x + math.radians(_camera_angle_x), self.camera_angle_y + math.radians(_camera_angle_y), self.camera_angle_z + math.radians(_camera_angle_z)
-
-    def view_style(self, _wiremesh = False, _r = 1, _g = 1, _b = 1):
-        self.r, self.g, self.b = _r, _g, _b
-        self.wiremesh = _wiremesh
-
-    def new_frame(self):
-        frame = []
-        
-        for model in self.map_array:
-            for wall_num in range(0,len(model)):
-                wall = model[wall_num]
-                for point in range(0,len(wall)-1):
-                    locals()["sp" + str(point) + str(wall_num)] = scale_point(wall[point][0],wall[point][1],wall[point][2], self.zfar, self.znear, self.fov, self.ar, self.camera_x, self.camera_y, self.camera_z , self.camera_angle_x, self.camera_angle_y, self.camera_angle_z)
-                temp_tri = render_wall_from_normalised_points(locals()["sp0"+ str(wall_num)][0],locals()["sp0"+ str(wall_num)][1],locals()["sp0"+ str(wall_num)][2],locals()["sp1"+ str(wall_num)][0],locals()["sp1"+ str(wall_num)][1],locals()["sp1"+ str(wall_num)][2],locals()["sp2"+ str(wall_num)][0],locals()["sp2"+ str(wall_num)][1],locals()["sp2"+ str(wall_num)][2],wall[len(wall)-1], self)
-                if temp_tri != None:
-                    frame.append(temp_tri)
-        frame.sort(key=lambda l : l[6], reverse= True)
-        return frame
