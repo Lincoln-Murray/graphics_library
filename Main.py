@@ -11,12 +11,13 @@ def random_colour():
         hexlen = len(hex_number)
     return hex_number
 
-def dim_colour(colour, scale_factor):
+def dim_colour(colour, scale_factor, _gl):
+    _r, _g, _b = _gl.r, _gl.g, _gl.b
     hex_colour = colour[1:]
     r, g, b = int(hex_colour[:2], 16), int(hex_colour[2:4], 16), int(hex_colour[4:], 16)
-    r = max(0, min(255, int(r * scale_factor)))
-    g = max(0, min(255, int(g * scale_factor)))
-    b = max(0, min(255, int(b * scale_factor)))
+    r = max(0, min(255, int(r * scale_factor*_r)))
+    g = max(0, min(255, int(g * scale_factor*_g)))
+    b = max(0, min(255, int(b * scale_factor*_b)))
     return '#%02x%02x%02x' % (r,g,b)
 
 def load_mtl(file_name):
@@ -82,7 +83,7 @@ def render_wall_from_normalised_points(x1_3d,y1_3d,z1_3d,x2_3d,y2_3d,z2_3d,x3_3d
     if not _gl.wiremesh:
         nx,ny,nz = get_normal_from_triangle(x1_3d,y1_3d,z1_3d,x2_3d,y2_3d,z2_3d,x3_3d,y3_3d,z3_3d)
         if nz <= 0:
-            colour = dim_colour(colour,-nz)
+            colour = dim_colour(colour,-nz,_gl)
         outline = ''
     else:
         nz = -1
@@ -255,6 +256,7 @@ class gl:
         self.width = _width
         self.height = _height
         self.wiremesh = False
+        self.r, self.g, self.b = 1,1,1
 
     def camera_absolute(self, _camera_x = None, _camera_y = None, _camera_z = None, _camera_angle_x = None, _camera_angle_y = None, _camera_angle_z = None):
         if _camera_x != None:
@@ -279,7 +281,8 @@ class gl:
         
         self.camera_angle_x, self.camera_angle_y, self.camera_angle_z = self.camera_angle_x + math.radians(_camera_angle_x), self.camera_angle_y + math.radians(_camera_angle_y), self.camera_angle_z + math.radians(_camera_angle_z)
 
-    def view_style(self, _wiremesh = False):
+    def view_style(self, _wiremesh = False, _r = 1, _g = 1, _b = 1):
+        self.r, self.g, self.b = _r, _g, _b
         self.wiremesh = _wiremesh
 
     def new_frame(self):
