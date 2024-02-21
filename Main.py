@@ -119,7 +119,11 @@ def scale_point(x,y,z, zfar, znear, fov, ar, camera_x, camera_y, camera_z ,camer
 
 class gl:
     map_array = []    
-    def __init__(self, _width = 1920, _height = 1080, _fov = math.radians(55), _zfar = 1000, _znear = 0.1):
+    def __init__(self, _width = 1920, _height = 1080, _fov = 55, _zfar = 1000, _znear = 0.1):
+        if _fov >= 180:
+            _fov = math.radians(55)
+        else:
+            _fov = math.radians(_fov)
         global half_width, half_height
         self.camera_x, self.camera_y, self.camera_z = 0,0,0
         self.camera_angle_x, self.camera_angle_y, self.camera_angle_z = 0,0,0
