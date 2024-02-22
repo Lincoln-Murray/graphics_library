@@ -176,6 +176,23 @@ class gl:
         frame.sort(key=lambda l : l[6], reverse= True)
         return frame
 
+    def render_image(self, background_colour, output_location = "images/output", file_format = '.svg'):
+        output = open(output_location + file_format, 'w')
+        if file_format == '.svg':
+            intro_string = '''<svg version="1.1" width="'''+str(self.width)+'''" height="'''+str(self.height)+'''" xmlns="http://www.w3.org/2000/svg">
+                <rect width="100%" height="100%" fill="'''+background_colour+'''" />
+            '''
+            output.write(intro_string)
+            triangles = self.new_frame()
+
+            for tri in triangles:
+                if tri[-2] == '':
+                    tri[-2] = tri[-1]
+                output.write('  <polygon points="'+str(tri[0])+' '+str(tri[1])+' '+str(tri[2])+' '+str(tri[3])+' '+str(tri[4])+' '+str(tri[5])+' " stroke="'+tri[-2]+'" fill="'+tri[-1]+'" stroke-width="5"/>\n')
+
+            output.write('</svg>')
+        output.close()
+
 class object(gl):
     def __init__(self, _model, x = 0, y = 0 , z = 0, ax = 0, ay = 0, az = 0, scale_x = 1, scale_y = 1, scale_z = 1,colour = None):
         ax, ay, az = math.radians(ax), math.radians(ay), math.radians(az)
