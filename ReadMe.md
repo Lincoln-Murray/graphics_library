@@ -41,7 +41,7 @@ To initiate the gl create an instance:
 Import Main  
 screen_width = 1920  
 screen_height = 1080  
-camera_fov = math.radians(55)  
+camera_fov = 55 
 max_z_distance = 1000  
 min_z_distance = 0.1  
 gl_example = Main.gl(screen_width, screen_height, camera_fov, max_z_distance, min_z_distance)
@@ -58,6 +58,13 @@ y_axis_angle = 45
 z_axis_angle = 180  
 colour = None  
 cube = Main.object(model, x, y, z, x_axis_angle, y_axis_angle, z_axis_angle, colour)  
+```
+To then render a test image in one of the supported formats:
+```  
+background_colour = '#000000'  
+file_location = 'images/output'  
+file_fornmat = '.svg'  
+renderer.render_image(background_colour, file_location, file_format)  
 ```
 
 You can also choose the viewstyle of the renderer. Solid or wire mesh:
