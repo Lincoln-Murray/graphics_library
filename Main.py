@@ -134,6 +134,7 @@ class gl:
         self.height = _height
         self.wiremesh = False
         self.r, self.g, self.b = 1,1,1
+        self.background_colour = '#000000'
 
     def camera_absolute(self, _camera_x = None, _camera_y = None, _camera_z = None, _camera_angle_x = None, _camera_angle_y = None, _camera_angle_z = None):
         if _camera_x != None:
@@ -158,7 +159,14 @@ class gl:
         
         self.camera_angle_x, self.camera_angle_y, self.camera_angle_z = self.camera_angle_x + math.radians(_camera_angle_x), self.camera_angle_y + math.radians(_camera_angle_y), self.camera_angle_z + math.radians(_camera_angle_z)
 
-    def view_style(self, _wiremesh = False, _r = 1, _g = 1, _b = 1):
+    def view_style(self, _wiremesh = False, _r = 1, _g = 1, _b = 1, _background_colour = '', _background_brightness = 0.4):
+        if _background_colour == '':
+            r = max(0, min(255, int(_background_brightness*_r*255)))
+            g = max(0, min(255, int(_background_brightness*_g*255)))
+            b = max(0, min(255, int(_background_brightness*_b*255)))
+            self.background_colour = '#%02x%02x%02x' % (r,g,b)
+        else:
+            self.background_colour = _background_colour
         self.r, self.g, self.b = _r, _g, _b
         self.wiremesh = _wiremesh
 
@@ -176,11 +184,11 @@ class gl:
         frame.sort(key=lambda l : l[6], reverse= True)
         return frame
 
-    def render_image(self, background_colour, output_location = "images/output", file_format = '.svg'):
+    def render_image(self, output_location = "images/output", file_format = '.svg'):
         output = open(output_location + file_format, 'w')
         if file_format == '.svg':
             intro_string = '''<svg version="1.1" width="'''+str(self.width)+'''" height="'''+str(self.height)+'''" xmlns="http://www.w3.org/2000/svg">
-                <rect width="100%" height="100%" fill="'''+background_colour+'''" />
+                <rect width="100%" height="100%" fill="'''+self.background_colour+'''" />
             '''
             output.write(intro_string)
             triangles = self.new_frame()
