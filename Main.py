@@ -184,7 +184,7 @@ class gl:
         frame.sort(key=lambda l : l[6], reverse= True)
         return frame
 
-    def render_image(self, output_location = "images/output", file_format = '.svg'):
+    def render_image(self, output_location = "images/output", file_format = '.svg', _line_thickness = 1):
         output = open(output_location + file_format, 'w')
         if file_format == '.svg':
             intro_string = '''<svg version="1.1" width="'''+str(self.width)+'''" height="'''+str(self.height)+'''" xmlns="http://www.w3.org/2000/svg">
@@ -196,7 +196,7 @@ class gl:
             for tri in triangles:
                 if tri[-2] == '':
                     tri[-2] = tri[-1]
-                output.write('  <polygon points="'+str(tri[0])+' '+str(tri[1])+' '+str(tri[2])+' '+str(tri[3])+' '+str(tri[4])+' '+str(tri[5])+' " stroke="'+tri[-2]+'" fill="'+tri[-1]+'" stroke-width="5"/>\n')
+                output.write('  <polygon points="'+str(tri[0])+' '+str(tri[1])+' '+str(tri[2])+' '+str(tri[3])+' '+str(tri[4])+' '+str(tri[5])+' " stroke="'+tri[-2]+'" fill="'+tri[-1]+'" stroke-width="'+str(_line_thickness)+'"/>\n')
 
             output.write('</svg>')
         output.close()

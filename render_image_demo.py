@@ -11,4 +11,4 @@ renderer.camera_absolute(_camera_x = 0, _camera_y = 0, _camera_z = 10, _camera_a
 renderer.view_style(False, 1, 1, 1, '', 0.2)
 
 
-renderer.render_image("images/output", ".svg")
+renderer.render_image("images/output", ".svg", 1)
