@@ -47,7 +47,7 @@ min_z_distance = 0.1
 gl_example = Main.gl(screen_width, screen_height, camera_fov, max_z_distance, min_z_distance)
 ```
 
-Then add the example teapot.obj model to the libraries map array:
+Then add the example teapot.obj model to the libraries map array:  
 ***Note:*** Defining a colour makes the whole object one colour
 
 ```
@@ -67,17 +67,20 @@ file_fornmat = '.svg'
 renderer.render_image(background_colour, file_location, file_format)  
 ```
 
-You can also choose the viewstyle of the renderer. Solid or wire mesh:
+You can also choose the viewstyle of the renderer. Solid or wire mesh, light rgb intensity, background colour(if blank will make the colour of the light) or brightness(brightness only works based on light rgb):
 
 ```
 wiremesh = False
-renderer.view_style(wiremesh)
+r, g, b = 1, 1, 1
+background_colour = ''
+background_brightness = 0
+renderer.view_style(wiremesh, r, g, b, background_colour, background_brightness)
 ```
 
-Here's an example of solid vs wire mesh:
-**Solid:**
+Here's an example of solid vs wire mesh:  
+### *Solid:*
 ![Shaded Utah Teapot](images/shaded_utah_teapot.png)
-**Wire Mesh:**
+### *Wire Mesh:*
 ![Wire Mesh Utah Teapot](images/wiremesh_utah_teapot.png)
 
 ### Moving things:
