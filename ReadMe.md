@@ -91,6 +91,7 @@ file_format = '.svg'
 outline_width = 1
 renderer.render_image(output_path, file_format, outline_width)
 ```  
+![Simple scene rendered to the .svg format](images/output.svg)
 
 ### Moving things:
 
