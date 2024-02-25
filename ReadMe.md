@@ -7,7 +7,7 @@
 + [Getting Started](#getting_started)
 + [Usage](#usage)
 
-## <a name = "about">About<a/>
+## <a name = "about">About</a>
 
  This is just a little project I work on
  in my free time. Mainly for easy access
@@ -82,6 +82,15 @@ Here's an example of solid vs wire mesh:
 ![Shaded Utah Teapot](images/shaded_utah_teapot.png)
 ### *Wire Mesh:*
 ![Wire Mesh Utah Teapot](images/wiremesh_utah_teapot.png)
+
+### Rendering:
+To render an image use the render_image function within the gl class, make sure to include the filename excluding the extension in the output_path:  
+```  
+output_path = 'images/output'
+file_format = '.svg'
+outline_width = 1
+renderer.render_image(output_path, file_format, outline_width)
+```  
 
 ### Moving things:
 
