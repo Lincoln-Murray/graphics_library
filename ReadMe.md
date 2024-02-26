@@ -1,4 +1,3 @@
-
 # Minimal Graphics library
 
 ## Table of Contents
@@ -7,7 +6,7 @@
 + [Getting Started](#getting_started)
 + [Usage](#usage)
 
-## <a name = "about">About</a>
+## `<a name = "about">`About`</a>`
 
  This is just a little project I work on
  in my free time. Mainly for easy access
@@ -27,11 +26,11 @@
 
  Happy Coding!
 
-## <a name = "getting_started">Getting Started</a>
+## `<a name = "getting_started">`Getting Started`</a>`
 
 To get this library running download the Main.py file and put it into your projects folder, then you need to just import it like you would any other Python3 library(by whatever the filename is). That's it, then you can create instances of the classes to use the library/module(whatever you want to call it).
 
-## <a name = "usage">Usage</a>
+## `<a name = "usage">`Usage`</a>`
 
 ### Initiating the library:
 
@@ -47,7 +46,7 @@ min_z_distance = 0.1
 gl_example = Main.gl(screen_width, screen_height, camera_fov, max_z_distance, min_z_distance)
 ```
 
-Then add the example teapot.obj model to the libraries map array:  
+Then add the example teapot.obj model to the libraries map array:
 ***Note:*** Defining a colour makes the whole object one colour
 
 ```
@@ -59,38 +58,47 @@ z_axis_angle = 180
 colour = None  
 cube = Main.object(model, x, y, z, x_axis_angle, y_axis_angle, z_axis_angle, colour)  
 ```
+
 To then render a test image in one of the supported formats:
-```  
+
+```
 background_colour = '#000000'  
 file_location = 'images/output'  
 file_fornmat = '.svg'  
 renderer.render_image(background_colour, file_location, file_format)  
 ```
 
-You can also choose the viewstyle of the renderer. Solid or wire mesh, light rgb intensity, background colour(if blank will make the colour of the light) or brightness(brightness only works based on light rgb):
+You can also choose the viewstyle of the renderer. Solid or wire mesh, light rgb intensity, background colour(if blank will make the colour of the light) or brightness(brightness only works based on light rgb not set colours):
 
 ```
 wiremesh = False
 r, g, b = 1, 1, 1
-background_colour = ''
+background_colour, outline_colour = '', ''
 background_brightness = 0
-renderer.view_style(wiremesh, r, g, b, background_colour, background_brightness)
+renderer.view_style(wiremesh, r, g, b, background_colour, background_brightness, outline_colour)
 ```
 
-Here's an example of solid vs wire mesh:  
+Here's an example of solid vs wire mesh:
+
 ### *Solid:*
+
 ![Shaded Utah Teapot](images/shaded_utah_teapot.png)
+
 ### *Wire Mesh:*
+
 ![Wire Mesh Utah Teapot](images/wiremesh_utah_teapot.png)
 
 ### Rendering:
-To render an image use the render_image function within the gl class, make sure to include the filename excluding the extension in the output_path:  
-```  
+
+To render an image use the render_image function within the gl class, make sure to include the filename excluding the extension in the output_path:
+
+```
 output_path = 'images/output'
 file_format = '.svg'
 outline_width = 1
 renderer.render_image(output_path, file_format, outline_width)
-```  
+```
+
 ![Simple scene rendered to the .svg format](images/output.svg)
 
 ### Moving things:
