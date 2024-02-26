@@ -84,11 +84,10 @@ def render_wall_from_normalised_points(x1_3d,y1_3d,z1_3d,x2_3d,y2_3d,z2_3d,x3_3d
         nx,ny,nz = get_normal_from_triangle(x1_3d,y1_3d,z1_3d,x2_3d,y2_3d,z2_3d,x3_3d,y3_3d,z3_3d)
         if nz <= 0:
             colour = dim_colour(colour,-nz,_gl)
-        outline = ''
     else:
         nz = -1
         colour = ''
-        outline = 'white'
+    _outline = _gl.outline
 
     if nz <=0:
         x1_2d = x1_3d*half_width+half_width
@@ -99,7 +98,7 @@ def render_wall_from_normalised_points(x1_3d,y1_3d,z1_3d,x2_3d,y2_3d,z2_3d,x3_3d
         y3_2d = y3_3d*half_height+half_height
         z_list = [z1_3d, z2_3d, z3_3d]
         z_list.sort(reverse=True)
-        return [int(x1_2d),int(y1_2d),int(x2_2d),int(y2_2d),int(x3_2d),int(y3_2d),z_list[0],outline,colour]
+        return [int(x1_2d),int(y1_2d),int(x2_2d),int(y2_2d),int(x3_2d),int(y3_2d),z_list[0],_outline,colour]
 
 def rotate_point(axisone,axistwo,raxis, angle):
     raxisone = axisone * math.cos(angle) - axistwo * math.sin(angle)
@@ -135,6 +134,7 @@ class gl:
         self.wiremesh = False
         self.r, self.g, self.b = 1,1,1
         self.background_colour = '#000000'
+        self.outline = ''
 
     def camera_absolute(self, _camera_x = None, _camera_y = None, _camera_z = None, _camera_angle_x = None, _camera_angle_y = None, _camera_angle_z = None):
         if _camera_x != None:
@@ -159,7 +159,7 @@ class gl:
         
         self.camera_angle_x, self.camera_angle_y, self.camera_angle_z = self.camera_angle_x + math.radians(_camera_angle_x), self.camera_angle_y + math.radians(_camera_angle_y), self.camera_angle_z + math.radians(_camera_angle_z)
 
-    def view_style(self, _wiremesh = False, _r = 1, _g = 1, _b = 1, _background_colour = '', _background_brightness = 0.4):
+    def view_style(self, _wiremesh = False, _r = 1, _g = 1, _b = 1, _background_colour = '', _background_brightness = 0.4, outline_colour = ''):
         if _background_colour == '':
             r = max(0, min(255, int(_background_brightness*_r*255)))
             g = max(0, min(255, int(_background_brightness*_g*255)))
@@ -169,6 +169,7 @@ class gl:
             self.background_colour = _background_colour
         self.r, self.g, self.b = _r, _g, _b
         self.wiremesh = _wiremesh
+        self.outline = outline_colour
 
     def new_frame(self):
         frame = []

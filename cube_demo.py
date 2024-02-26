@@ -27,7 +27,7 @@ frame.pack(anchor=SW, side=LEFT)
 viewport = Canvas(frame, width=renderer.width, height=renderer.height)
 viewport.pack(side=TOP)
 
-renderer.view_style(False, 1, 0, 1, '', 0.2)
+renderer.view_style(False, 1, 0, 1, '', 0.2, '#000000')
 
 def loop():
     viewport.create_rectangle(0,0,renderer.width,renderer.height, fill=renderer.background_colour)
