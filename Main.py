@@ -72,7 +72,7 @@ def get_normal_from_triangle(x1,y1,z1,x2,y2,z2,x3,y3,z3):
     lx1, ly1, lz1 = x2 - x1, y2 - y1, z2 - z1
     lx2, ly2, lz2 = x3 - x1, y3 - y1, z3 - z1
     nx,ny,nz = ly1 * lz2 - lz1 * ly2, lz1 * lx2 - lx1 * lz2, lx1 * ly2 - ly1 * lx2
-    normal_length = math.sqrt(nx*nx+ny*ny+nz*nz)
+    normal_length = (nx*nx+ny*ny+nz*nz)**0.5
     if normal_length == 0:
         return 0,0,0
     else:
@@ -153,9 +153,9 @@ class gl:
     def move_camera(self, _camera_x = 0, _camera_y = 0, _camera_z = 0, _camera_angle_x = 0, _camera_angle_y = 0, _camera_angle_z = 0):
         self.camera_z += math.cos(self.camera_angle_y) * _camera_z
         self.camera_x += math.sin(self.camera_angle_y) * _camera_z
-        self.camera_x += math.sin(self.camera_angle_y+1.5708) * _camera_x
-        self.camera_z += math.cos(self.camera_angle_y+1.5708) * _camera_x
-        self.camera_y = self.camera_y + _camera_y
+        self.camera_x += math.cos(self.camera_angle_y) * _camera_x
+        self.camera_z += math.sin(self.camera_angle_y) * _camera_x
+        self.camera_y += _camera_y
         
         self.camera_angle_x, self.camera_angle_y, self.camera_angle_z = self.camera_angle_x + math.radians(_camera_angle_x), self.camera_angle_y + math.radians(_camera_angle_y), self.camera_angle_z + math.radians(_camera_angle_z)
 
