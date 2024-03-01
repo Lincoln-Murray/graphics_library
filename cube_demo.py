@@ -3,10 +3,10 @@ from tkinter.ttk import *
 from tkinter import *
 import time
 
-model = 'models/Sphericon.stl'
+model = 'models/cube.stl'
 
 renderer = Main.gl(1920,1080, 55, 1000, 0.1)
-cube = Main.object(model,0,0,0,0,35,0, 0.002, 0.002, 0.002, None)
+cube = Main.object(model,0,0,0,0,35,0, 0.0000002, 0.0000002, 0.0000002, None)
 
 hwstr = str(renderer.width) + 'x' + str(renderer.height)
 ar = int(renderer.height)/int(renderer.width)

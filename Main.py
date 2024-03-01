@@ -302,9 +302,62 @@ class object(gl):
                             face.append(random_colour())
                             self.object_array.append(face)
                             face = []
-                        
-                        
-
+                else:
+                    model = open(_model, 'rb')
+                    byte_array = bytearray(model.read())
+                    bytenum = 0
+                    var_temp = None
+                    temp = None
+                    temp_2 = None
+                    temp_vertex = []
+                    tri = []
+                    new_tri = True
+                    for byte in byte_array:
+                        bytenum +=1
+                        if bytenum < 81:
+                            pass
+                        elif bytenum >= 81 and bytenum <=84:
+                            if bytenum == 81:
+                                var_temp = int(byte).to_bytes()
+                            elif bytenum == 82 or bytenum == 83 or bytenum == 84:
+                                var_temp = int(byte).to_bytes() + var_temp
+                            if bytenum == 84:
+                                tri_count = int.from_bytes(var_temp)
+                        elif ((bytenum-85) % 50) == 0:
+                            new_tri = True
+                            var_temp = None
+                            temp = 0
+                            temp_2 = 0
+                            temp_vertex = []
+                            tri = []
+                            new_tri = True
+                        elif new_tri:
+                            temp += 1
+                            if temp == 12:
+                                new_tri = False
+                                temp = 0
+                                temp_2 = 0
+                        else:
+                            temp+=1
+                            if temp == 1 or temp == 5 or temp == 9:
+                                var_temp = int(byte).to_bytes()
+                            else:
+                                var_temp = int(byte).to_bytes() + var_temp
+                            if temp == 4 or temp == 8 or temp == 12:
+                                temp_vertex.append(int.from_bytes(var_temp, signed = True))
+                            if temp == 12:
+                                temp = 0
+                                temp_2+=1
+                                temp_vertex[0], temp_vertex[1], temp_vertex[2] = rotate_point(float(temp_vertex[0]), float(temp_vertex[1]), float(temp_vertex[2]), az)
+                                temp_vertex[0], temp_vertex[1], temp_vertex[2] = rotate_point(float(temp_vertex[2]), float(temp_vertex[0]), float(temp_vertex[1]), ay)
+                                temp_vertex[0], temp_vertex[1], temp_vertex[2] = rotate_point(float(temp_vertex[1]), float(temp_vertex[2]), float(temp_vertex[0]), ax)
+                                tri.append([float(temp_vertex[0]*scale_x) + x, float(temp_vertex[1]*scale_y) - y, float(temp_vertex[2]*scale_z) + z])
+                                temp_vertex = []
+                            if temp_2 == 3:
+                                tri.append(random_colour())
+                                if len(tri) != 1:
+                                    self.object_array.append(tri)
+                                tri = []
         super().map_array.append(self.object_array)
         self.map_position = super().map_array.index(self.object_array)
 
