@@ -182,6 +182,7 @@ class gl:
                 temp_tri = render_wall_from_normalised_points(locals()["sp0"+ str(wall_num)][0],locals()["sp0"+ str(wall_num)][1],locals()["sp0"+ str(wall_num)][2],locals()["sp1"+ str(wall_num)][0],locals()["sp1"+ str(wall_num)][1],locals()["sp1"+ str(wall_num)][2],locals()["sp2"+ str(wall_num)][0],locals()["sp2"+ str(wall_num)][1],locals()["sp2"+ str(wall_num)][2],wall[len(wall)-1], self)
                 if temp_tri != None:
                     frame.append(temp_tri)
+                    print(temp_tri)
         frame.sort(key=lambda l : l[6], reverse= True)
         return frame
 
@@ -353,10 +354,10 @@ class object(gl):
                                 temp_vertex[0], temp_vertex[1], temp_vertex[2] = rotate_point(float(temp_vertex[1]), float(temp_vertex[2]), float(temp_vertex[0]), ax)
                                 tri.append([float(temp_vertex[0]*scale_x) + x, float(temp_vertex[1]*scale_y) - y, float(temp_vertex[2]*scale_z) + z])
                                 temp_vertex = []
-                            if temp_2 == 3:
+                            if temp_2 == 3 and temp == 0:
+                                tri = [tri[2], tri[1], tri[0]]
                                 tri.append(random_colour())
-                                if len(tri) != 1:
-                                    self.object_array.append(tri)
+                                self.object_array.append(tri)
                                 tri = []
         super().map_array.append(self.object_array)
         self.map_position = super().map_array.index(self.object_array)
