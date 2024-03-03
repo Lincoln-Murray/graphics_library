@@ -11,7 +11,6 @@ cube = Main.object(model,0,0,1,0,35,0, 0.0000001, 0.0000001, 0.0000001, None)
 cube = Main.object(model_2,-3,0,1,0,35,0, 0.5, 0.5, 0.5, None)
 
 hwstr = str(renderer.width) + 'x' + str(renderer.height)
-ar = int(renderer.height)/int(renderer.width)
 renderer.camera_absolute(_camera_x = 0, _camera_y = 0, _camera_z = 10, _camera_angle_x = 0, _camera_angle_y = 0, _camera_angle_z = 0)
 
 

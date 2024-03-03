@@ -182,7 +182,7 @@ class gl:
                 temp_tri = render_wall_from_normalised_points(locals()["sp0"+ str(wall_num)][0],locals()["sp0"+ str(wall_num)][1],locals()["sp0"+ str(wall_num)][2],locals()["sp1"+ str(wall_num)][0],locals()["sp1"+ str(wall_num)][1],locals()["sp1"+ str(wall_num)][2],locals()["sp2"+ str(wall_num)][0],locals()["sp2"+ str(wall_num)][1],locals()["sp2"+ str(wall_num)][2],wall[len(wall)-1], self)
                 if temp_tri != None:
                     frame.append(temp_tri)
-                    print(temp_tri)
+                    #print(temp_tri)
         frame.sort(key=lambda l : l[6], reverse= True)
         return frame
 
@@ -204,14 +204,15 @@ class gl:
         output.close()
 
 class object(gl):
-    def __init__(self, _model, x = 0, y = 0 , z = 0, ax = 0, ay = 0, az = 0, scale_x = 1, scale_y = 1, scale_z = 1,colour = None):
+    def __init__(self, _model, x = 0, y = 0 , z = 0, ax = 0, ay = 0, az = 0, scale_x = 1, scale_y = 1, scale_z = 1,colour = None, ignore_mtl = False):
         ax, ay, az = math.radians(ax), math.radians(ay), math.radians(az)
         model = open(_model, 'rt')
         self.object_array = []
         if _model[-4:] == '.obj':
             count = 0
             current_material = None
-            materials = load_mtl(_model[:-3]+ 'mtl')
+            if not ignore_mtl:
+                materials = load_mtl(_model[:-3]+ 'mtl')
             for line in model:
                 if line == '\n':
                     pass
