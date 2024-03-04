@@ -5,13 +5,9 @@
 * [ ] Use precalculated normal
 
 - [ ] Work on individual object rotation
-
-* [ ] Support other file formats
-  * [ ] Stl
-
 - [ ] Fix lag
   - [ ] Swap from Tkinter?
-  - [ ] Optimise function calls
+  - [X] use time to run loop at consistent intervals
 
 ### In Progress
 
@@ -19,7 +15,7 @@
 
   - [ ] rasterization
   - [X] export to svg
-  - [ ] write to binary files
+  - [X] write to binary files
   - [ ] export to jpg
   - [ ] export to mp4
 - [ ] Add Mtl support
@@ -28,4 +24,8 @@
   - [ ] shading
   - [ ] textures
   - [ ] reflectivity
-
+- [ ] Lighting  
+  - [ ] Camera light
+  - [ ] Colouring
+  - [ ] Light on axies
+  - [ ] Off center lights
