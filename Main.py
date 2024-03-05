@@ -11,14 +11,26 @@ def random_colour():
         hexlen = len(hex_number)
     return hex_number
 
-def dim_colour(colour, scale_factor, _gl):
-    _r, _g, _b = _gl.r, _gl.g, _gl.b
+def dim_colour(colour, scale_factor, light_attributes):
+    _r, _g, _b = light_attributes[3], light_attributes[4], light_attributes[5]
     hex_colour = colour[1:]
     r, g, b = int(hex_colour[:2], 16), int(hex_colour[2:4], 16), int(hex_colour[4:], 16)
     r = max(0, min(255, int(r * scale_factor*_r)))
     g = max(0, min(255, int(g * scale_factor*_g)))
     b = max(0, min(255, int(b * scale_factor*_b)))
     return '#%02x%02x%02x' % (r,g,b)
+
+def average_colour(colour_list):
+    r, g, b = 0,0,0
+    count = 0
+    for colour in colour_list:
+        hex_colour = colour[1:]
+        r, g, b = r + int(hex_colour[:2], 16), g + int(hex_colour[2:4], 16), b + int(hex_colour[4:], 16)
+        count+=1
+    if count!=0:
+        r, g, b = int(r/count), int(g/count), int(b/count)
+    return '#%02x%02x%02x' % (r,g,b)
+        
 
 def load_mtl(file_name):
     file = open(file_name, "rt")
@@ -83,7 +95,16 @@ def render_wall_from_normalised_points(x1_3d,y1_3d,z1_3d,x2_3d,y2_3d,z2_3d,x3_3d
     if not _gl.wiremesh:
         nx,ny,nz = get_normal_from_triangle(x1_3d,y1_3d,z1_3d,x2_3d,y2_3d,z2_3d,x3_3d,y3_3d,z3_3d)
         if nz <= 0:
-            colour = dim_colour(colour,-nz,_gl)
+            colour_list = []
+            for light in _gl.light_array:
+                x,y,z = light[0], light[1], light[2]
+                length = (x**2 + y**2 + z**2)**0.5                
+                colour_x = dim_colour(colour,-nx*(x/length), light)
+                colour_y = dim_colour(colour,-ny*(y/length), light)
+                colour_z = dim_colour(colour,-nz*(z/length), light)
+                colour_list.append(average_colour([colour_x, colour_y, colour_z]))
+                pass
+            colour = average_colour(colour_list)
     else:
         nz = -1
         colour = ''
@@ -117,7 +138,8 @@ def scale_point(x,y,z, zfar, znear, fov, ar, camera_x, camera_y, camera_z ,camer
     return [x,y,z]
 
 class gl:
-    map_array = []    
+    map_array = []
+    light_array = [] 
     def __init__(self, _width = 1920, _height = 1080, _fov = 55, _zfar = 1000, _znear = 0.1):
         if _fov >= 180:
             _fov = math.radians(55)
@@ -173,7 +195,6 @@ class gl:
 
     def new_frame(self):
         frame = []
-        
         for model in self.map_array:
             for wall_num in range(0,len(model)):
                 wall = model[wall_num]
@@ -202,6 +223,16 @@ class gl:
 
             output.write('</svg>')
         output.close()
+
+class light(gl):
+    def __init__(self, x, y, z, r, g, b):
+        self.attributes = [x,y,z, r,g,b]
+        super().light_array.append(self.attributes)
+        self.light_position = super().light_array.index(self.attributes)
+    
+    def delete(self):
+        del super().light_array[self.light_position]
+        del self
 
 class object(gl):
     def __init__(self, _model, x = 0, y = 0 , z = 0, ax = 0, ay = 0, az = 0, scale_x = 1, scale_y = 1, scale_z = 1,colour = None, ignore_mtl = False):
