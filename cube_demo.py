@@ -26,7 +26,7 @@ frame.pack(anchor=SW, side=LEFT)
 viewport = Canvas(frame, width=renderer.width, height=renderer.height)
 viewport.pack(side=TOP)
 
-renderer.view_style(False, 1.5, 1.5, 1.5, '', 0, '')
+renderer.view_style(False, 0.1, '')
 
 def loop():
     start = time.time()

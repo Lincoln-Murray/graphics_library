@@ -31,7 +31,6 @@ def average_colour(colour_list):
         r, g, b = int(r/count), int(g/count), int(b/count)
     return '#%02x%02x%02x' % (r,g,b)
         
-
 def load_mtl(file_name):
     file = open(file_name, "rt")
     materials = {}
@@ -181,15 +180,23 @@ class gl:
         
         self.camera_angle_x, self.camera_angle_y, self.camera_angle_z = self.camera_angle_x + math.radians(_camera_angle_x), self.camera_angle_y + math.radians(_camera_angle_y), self.camera_angle_z + math.radians(_camera_angle_z)
 
-    def view_style(self, _wiremesh = False, _r = 1, _g = 1, _b = 1, _background_colour = '', _background_brightness = 0.4, outline_colour = ''):
-        if _background_colour == '':
-            r = max(0, min(255, int(_background_brightness*_r*255)))
-            g = max(0, min(255, int(_background_brightness*_g*255)))
-            b = max(0, min(255, int(_background_brightness*_b*255)))
+    def view_style(self, _wiremesh = False, _background = 1, outline_colour = ''):
+        print(type(_background))
+        if type(_background) != str:
+            colours = []
+            for light in self.light_array:
+                colours.append('#%02x%02x%02x' % (light[3],light[4],light[5]))
+            if colours != []:
+                hex_colour = average_colour(colours)[1:]
+            else:
+                hex_colour = '000000'
+            _r, _g, _b = int(hex_colour[:2], 16), int(hex_colour[2:4], 16), int(hex_colour[4:], 16)
+            r = max(0, min(255, int(_background*_r*255)))
+            g = max(0, min(255, int(_background*_g*255)))
+            b = max(0, min(255, int(_background*_b*255)))
             self.background_colour = '#%02x%02x%02x' % (r,g,b)
         else:
-            self.background_colour = _background_colour
-        self.r, self.g, self.b = _r, _g, _b
+            self.background_colour = _background
         self.wiremesh = _wiremesh
         self.outline = outline_colour
 
