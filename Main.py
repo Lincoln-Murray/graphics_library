@@ -181,7 +181,7 @@ class gl:
         self.camera_angle_x, self.camera_angle_y, self.camera_angle_z = self.camera_angle_x + math.radians(_camera_angle_x), self.camera_angle_y + math.radians(_camera_angle_y), self.camera_angle_z + math.radians(_camera_angle_z)
 
     def view_style(self, _wiremesh = False, _background = 1, outline_colour = ''):
-        print(type(_background))
+        #print(type(_background))
         if type(_background) != str:
             colours = []
             for light in self.light_array:
@@ -236,7 +236,12 @@ class light(gl):
         self.attributes = [x,y,z, r,g,b]
         super().light_array.append(self.attributes)
         self.light_position = super().light_array.index(self.attributes)
-    
+
+    def move_light(self,x,y,z):
+        self.attributes[0] += x
+        self.attributes[1] += y
+        self.attributes[2] += z
+
     def delete(self):
         del super().light_array[self.light_position]
         del self
