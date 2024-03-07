@@ -13,7 +13,7 @@ cube = Main.object(model_2,-3,0,1,0,35,0, 0.5, 0.5, 0.5, None)
 hwstr = str(renderer.width) + 'x' + str(renderer.height)
 renderer.camera_absolute(_camera_x = 0, _camera_y = 0, _camera_z = 10, _camera_angle_x = 0, _camera_angle_y = 0, _camera_angle_z = 0)
 
-light1 = Main.light(1,1,1, 1,1,1)
+light1 = Main.light(-10,-10,-10, 1,1,1)
 
 #init the window and viewport
 master = Tk()
@@ -27,12 +27,23 @@ viewport = Canvas(frame, width=renderer.width, height=renderer.height)
 viewport.pack(side=TOP)
 
 renderer.view_style(False, 0.1, '')
-
+count = 0
+dir = True
 def loop():
+    global count, dir
     start = time.time()
     viewport.create_rectangle(0,0,renderer.width,renderer.height, fill=renderer.background_colour)
     triangles = renderer.new_frame()
-    renderer.move_camera(_camera_angle_z = 1, _camera_angle_y=2)
+    if count <=200:
+        if dir:
+            light1.move_light(-0.1,-0.1,-0.1)
+        else:
+            light1.move_light(0.1,0.1,0.1)
+        count+=1
+    else:
+        count = 0
+        dir = not dir
+    #renderer.move_camera(_camera_angle_z = 1, _camera_angle_y=2)
     for tri in triangles:
         viewport.create_polygon([tri[0], tri[1], tri[2], tri[3], tri[4], tri[5]],outline=tri[-2], fill=tri[-1])
     frame_time = int((time.time() - start)*1000)

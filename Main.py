@@ -241,6 +241,9 @@ class light(gl):
         self.attributes[0] += x
         self.attributes[1] += y
         self.attributes[2] += z
+        del super().light_array[self.light_position]
+        super().light_array.append(self.attributes)
+        self.light_position = super().light_array.index(self.attributes)
 
     def delete(self):
         del super().light_array[self.light_position]
