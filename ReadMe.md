@@ -68,14 +68,20 @@ file_fornmat = '.svg'
 renderer.render_image(background_colour, file_location, file_format)  
 ```
 
-You can also choose the viewstyle of the renderer. Solid or wire mesh, light rgb intensity, background colour(if blank will make the colour of the light) or brightness(brightness only works based on light rgb not set colours):
+To initiate a light you need to create an instance:
+
+```
+x, y, z = 0, 0, 10
+r, g, b = 1, 1, 1
+light1 = Main.light(x, y, z, r, g, b)
+```
+
+You can also choose the viewstyle of the renderer. Solid or wire mesh, background colour/brightness and outline colour:
 
 ```
 wiremesh = False
-r, g, b = 1, 1, 1
-background_colour, outline_colour = '', ''
-background_brightness = 0
-renderer.view_style(wiremesh, r, g, b, background_colour, background_brightness, outline_colour)
+background, outline_colour = 0, ''
+renderer.view_style(wiremesh, background, outline_colour)
 ```
 
 Here's an example of solid vs wire mesh:
@@ -121,4 +127,11 @@ x_axis_angle = 0
 y_axis_angle = 0  
 z_axis_angle = 0  
 camera_absolute(x, y, z, x_axis_angle, y_axis_angle, z_axis_angle)  
-``
+```
+
+To move a light locally use(there''s no angle as all lights are planes faceing the origin):
+
+```
+x, y, z = -1, 1, 0
+light1.move_light(x, y, z)
+```
