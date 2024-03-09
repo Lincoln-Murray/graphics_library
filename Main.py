@@ -1,8 +1,11 @@
+#library imports
 import math
 import random
 
+#global variables
 half_height, half_width = 1,1
 
+#generates a random hexedecimal colour string in the format '#000000'
 def random_colour():
     hexlen = 0
     while hexlen != 7:
@@ -20,6 +23,7 @@ def dim_colour(colour, scale_factor, light_attributes):
     b = max(0, min(255, int(b * scale_factor*_b)))
     return '#%02x%02x%02x' % (r,g,b)
 
+#averages hexedecimal colours from a list in the format '#000000'
 def average_colour(colour_list):
     r, g, b = 0,0,0
     count = 0
@@ -30,7 +34,8 @@ def average_colour(colour_list):
     if count!=0:
         r, g, b = int(r/count), int(g/count), int(b/count)
     return '#%02x%02x%02x' % (r,g,b)
-        
+
+#loads materials from a .mtl file
 def load_mtl(file_name):
     file = open(file_name, "rt")
     materials = {}
@@ -79,6 +84,7 @@ def load_mtl(file_name):
         materials[current_name] = current_material
     return materials
 
+#calculates the normal of a triangle
 def get_normal_from_triangle(x1,y1,z1,x2,y2,z2,x3,y3,z3):
     lx1, ly1, lz1 = x2 - x1, y2 - y1, z2 - z1
     lx2, ly2, lz2 = x3 - x1, y3 - y1, z3 - z1
@@ -89,6 +95,7 @@ def get_normal_from_triangle(x1,y1,z1,x2,y2,z2,x3,y3,z3):
     else:
         return nx/normal_length, ny/normal_length, nz/normal_length
 
+#scales polygon points and applies appropriate colouring to faces
 def render_wall_from_normalised_points(x1_3d,y1_3d,z1_3d,x2_3d,y2_3d,z2_3d,x3_3d,y3_3d,z3_3d,colour,_gl):
     global half_width, half_height
     if not _gl.wiremesh:
@@ -120,11 +127,13 @@ def render_wall_from_normalised_points(x1_3d,y1_3d,z1_3d,x2_3d,y2_3d,z2_3d,x3_3d
         z_list.sort(reverse=True)
         return [int(x1_2d),int(y1_2d),int(x2_2d),int(y2_2d),int(x3_2d),int(y3_2d),z_list[0],_outline,colour]
 
+#rotates a point around the raxis(rotation axis) by an angle in radians
 def rotate_point(axisone,axistwo,raxis, angle):
     raxisone = axisone * math.cos(angle) - axistwo * math.sin(angle)
     raxistwo = axisone * math.sin(angle) + axistwo * math.cos(angle)
     return raxisone,raxistwo,raxis
 
+#scales a point based on the specifications of the camera(fov, location, angle, min and max distance)
 def scale_point(x,y,z, zfar, znear, fov, ar, camera_x, camera_y, camera_z ,camera_angle_x, camera_angle_y, camera_angle_z):
     x,y,z = rotate_point(x,y,z, camera_angle_z)
     x,y,z = rotate_point(z,x,y, camera_angle_y)
@@ -136,9 +145,12 @@ def scale_point(x,y,z, zfar, znear, fov, ar, camera_x, camera_y, camera_z ,camer
         z = z*(zfar/(zfar-znear))-((zfar*znear)/(zfar-znear))
     return [x,y,z]
 
+#main graphics_library class
 class gl:
+    #class variables
     map_array = []
-    light_array = [] 
+    light_array = []
+    #creates passed attributes to class variables 
     def __init__(self, _width = 1920, _height = 1080, _fov = 55, _zfar = 1000, _znear = 0.1):
         if _fov >= 180:
             _fov = math.radians(55)
@@ -157,6 +169,7 @@ class gl:
         self.background_colour = '#000000'
         self.outline = ''
 
+    #sets the absolute location of the camera in global coordinates
     def camera_absolute(self, _camera_x = None, _camera_y = None, _camera_z = None, _camera_angle_x = None, _camera_angle_y = None, _camera_angle_z = None):
         if _camera_x != None:
             self.camera_x = _camera_x
@@ -171,6 +184,7 @@ class gl:
         if _camera_angle_z != None:
             self.camera_angle_z = math.radians(_camera_angle_z)
 
+    #translates the location of the camera in local coordinates(mostly)
     def move_camera(self, _camera_x = 0, _camera_y = 0, _camera_z = 0, _camera_angle_x = 0, _camera_angle_y = 0, _camera_angle_z = 0):
         self.camera_z += math.cos(self.camera_angle_y) * _camera_z
         self.camera_x += math.sin(self.camera_angle_y) * _camera_z
@@ -180,6 +194,7 @@ class gl:
         
         self.camera_angle_x, self.camera_angle_y, self.camera_angle_z = self.camera_angle_x + math.radians(_camera_angle_x), self.camera_angle_y + math.radians(_camera_angle_y), self.camera_angle_z + math.radians(_camera_angle_z)
 
+    #defines the style and renderer specifications
     def view_style(self, _wiremesh = False, _background = 1, outline_colour = ''):
         #print(type(_background))
         if type(_background) != str:
@@ -200,6 +215,7 @@ class gl:
         self.wiremesh = _wiremesh
         self.outline = outline_colour
 
+    #calls a new frame and passes all walls and triangles to other functions
     def new_frame(self):
         frame = []
         for model in self.map_array:
@@ -214,6 +230,7 @@ class gl:
         frame.sort(key=lambda l : l[6], reverse= True)
         return frame
 
+    #renders an image to the desired fromat
     def render_image(self, output_location = "images/output", file_format = '.svg', _line_thickness = 1):
         output = open(output_location + file_format, 'w')
         if file_format == '.svg':
@@ -231,12 +248,15 @@ class gl:
             output.write('</svg>')
         output.close()
 
+#lighting class(child of gl)
 class light(gl):
+    #pass attributes to local variables
     def __init__(self, x, y, z, r, g, b):
         self.attributes = [x,y,z, r,g,b]
         super().light_array.append(self.attributes)
         self.light_position = super().light_array.index(self.attributes)
 
+    #translates the light locally
     def move_light(self,x,y,z):
         self.attributes[0] += x
         self.attributes[1] += y
@@ -245,11 +265,14 @@ class light(gl):
         super().light_array.append(self.attributes)
         self.light_position = super().light_array.index(self.attributes)
 
+    #deletes the light
     def delete(self):
         del super().light_array[self.light_position]
         del self
 
+#object class(child of gl)
 class object(gl):
+    #load model and pass to parent
     def __init__(self, _model, x = 0, y = 0 , z = 0, ax = 0, ay = 0, az = 0, scale_x = 1, scale_y = 1, scale_z = 1,colour = None, ignore_mtl = False):
         ax, ay, az = math.radians(ax), math.radians(ay), math.radians(az)
         model = open(_model, 'rt')
