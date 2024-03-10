@@ -277,6 +277,7 @@ class object(gl):
         ax, ay, az = math.radians(ax), math.radians(ay), math.radians(az)
         model = open(_model, 'rt')
         self.object_array = []
+        #load .obj files
         if _model[-4:] == '.obj':
             count = 0
             current_material = None
@@ -352,12 +353,14 @@ class object(gl):
                         self.object_array.append([locals()["fv1"], locals()["fv"+str(p)], locals()["fv"+str(p+1)], new_colour])
                 elif line.split()[0] == 'usemtl':
                     current_material = materials[line.split()[1]]
+        #load .stl files
         elif _model[-4:] == '.stl':
                 if model.read()[:5] == 'solid':
                     ascii_stl = True
                 else:
                     ascii_stl = False
                 face = []
+                #load ascii based stl
                 if ascii_stl:
                     model = open(_model, 'rt')
                     for line in model:
@@ -374,6 +377,7 @@ class object(gl):
                             self.object_array.append(face)
                             face = []
                 else:
+                    #load binary based stl
                     model = open(_model, 'rb')
                     byte_array = bytearray(model.read())
                     bytenum = 0
@@ -431,47 +435,3 @@ class object(gl):
                                 tri = []
         super().map_array.append(self.object_array)
         self.map_position = super().map_array.index(self.object_array)
-
-#    def translate_absolute(self, _gl, _x=0, _y=0, _z=0, _angle_x=0, _angle_y=0, _angle_z=0):
-#        _angle_x, _angle_y, _angle_z = math.radians(_angle_x), math.radians(_angle_y), math.radians(_angle_z)
-#        new_object_array = []
-#        for tri in self.object_array:
-#            new_tri = []
-#            print(tri)
-#            for point in tri:
-#                print(point)
-#                if point != tri[-1]:
-#                    x, y, z = point[0], point[1], point[2]
-#                    x, y, z = rotate_point(x, y, z, _angle_z)
-#                    z, x, y = rotate_point(z, x, y, _angle_y)
-#                    y, z, x = rotate_point(y, z, x, _angle_x)
-#                    point[0], point[1], point[2] = x+_x, y-_y, z+_z
-#                new_tri.append(point)
-#            print("\n")
-#            new_object_array.append(new_tri)
-#        print("\n\n\n\n")
-#        self.object_array = new_object_array
-#        del _gl.map_array[self.map_position]
-#        _gl.map_array.append(self.object_array)
-#        self.map_position = _gl.map_array.index(self.object_array)
-
-#    def set_properties(self, _gl, x = 0, y = 0 , z = 0, ax = 0, ay = 0, az = 0, colour = None):
-#        ax, ay, az = math.radians(ax), math.radians(ay), math.radians(az)
-#        count = 0
-#        new_object_array = []
-#        for tri in self.object_array:
-#            new_tri = []
-#            for vertice in tri:
-#                if vertice != tri[-1]:
-#                    split = [0,vertice[0],vertice[1],vertice[2]]
-#                    split[1], split[2], split[3] = rotate_point(float(split[1]), float(split[2]), float(split[3]), az)
-#                    split[1], split[2], split[3] = rotate_point(float(split[3]), float(split[1]), float(split[2]), ay)
-#                    split[1], split[2], split[3] = rotate_point(float(split[2]), float(split[3]), float(split[1]), ax)
-#                    new_tri.append([float(split[1]) + x, float(split[2]) - y, float(split[3]) + z,tri[-1]])
-#            new_object_array.append(new_tri)
-#        self.object_array = new_object_array
-#        print(self.object_array)
-#        print('\n\n\n\n')
-#        del _gl.map_array[self.map_position]
-#        _gl.map_array.append(self.object_array)
-#        self.map_position = _gl.map_array.index(self.object_array)
