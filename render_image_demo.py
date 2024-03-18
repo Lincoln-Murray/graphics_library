@@ -7,9 +7,9 @@ model_2 = 'models/cube.obj'
 
 #create instances from the library
 renderer = Main.gl(1920,1080, 55, 1000, 0.1)
-teapot_1 = Main.object(model,-4.5,-1,0,0,45,180, 1, 1, 1, '#FF0000')
-teapot_2 = Main.object(model,4.5,-1,0,0,315,180, 1, 1, 1, '#0000FF')
-cube = Main.object(model_2,0,0,0,0,35,0, 1, 1, 1, '#00FF00')
+teapot_1 = Main.object(renderer, model,-4.5,-1,0,0,45,180, 1, 1, 1, '#FF0000')
+teapot_2 = Main.object(renderer, model,4.5,-1,0,0,315,180, 1, 1, 1, '#0000FF')
+cube = Main.object(renderer, model_2,0,0,0,0,35,0, 1, 1, 1, '#00FF00')
 light1 = Main.light(0, 0, 10, 1, 1, 1)
 
 #set attributes

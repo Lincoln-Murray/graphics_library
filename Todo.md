@@ -24,8 +24,3 @@
   - [ ] shading
   - [ ] textures
   - [ ] reflectivity
-- [ ] Lighting  
-  - [ ] Camera light
-  - [ ] Colouring
-  - [ ] Light on axies
-  - [ ] Off center lights

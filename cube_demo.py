@@ -9,8 +9,8 @@ model = 'models/cube.stl'
 model_2 = 'models/cube.obj'
 
 renderer = Main.gl(1920,1080, 55, 1000, 0.1)
-cube = Main.object(model,0,0,1,0,35,0, 0.0000001, 0.0000001, 0.0000001, None)
-cube = Main.object(model_2,-3,0,1,0,35,0, 0.5, 0.5, 0.5, None)
+cube = Main.object(renderer, model,0,0,1,0,35,0, 0.0000001, 0.0000001, 0.0000001, None)
+cube = Main.object(renderer, model_2,-3,0,1,0,35,0, 0.5, 0.5, 0.5, None)
 
 renderer.camera_absolute(_camera_x = 0, _camera_y = 0, _camera_z = 10, _camera_angle_x = 0, _camera_angle_y = 0, _camera_angle_z = 0)
 

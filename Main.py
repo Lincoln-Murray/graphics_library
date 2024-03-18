@@ -248,35 +248,37 @@ class gl:
             output.write('</svg>')
         output.close()
 
-#lighting class(child of gl)
-class light(gl):
+#lighting class
+class light():
     #pass attributes to local variables
-    def __init__(self, x, y, z, r, g, b):
+    def __init__(self, parent, x, y, z, r, g, b):
         self.attributes = [x,y,z, r,g,b]
-        super().light_array.append(self.attributes)
-        self.light_position = super().light_array.index(self.attributes)
+        self.parent = parent
+        parent.light_array.append(self.attributes)
+        self.light_position = parent.light_array.index(self.attributes)
 
     #translates the light locally
     def move_light(self,x,y,z):
         self.attributes[0] += x
         self.attributes[1] += y
         self.attributes[2] += z
-        del super().light_array[self.light_position]
-        super().light_array.append(self.attributes)
-        self.light_position = super().light_array.index(self.attributes)
+        del self.parent.light_array[self.light_position]
+        self.parent.light_array.append(self.attributes)
+        self.light_position = self.parent.light_array.index(self.attributes)
 
     #deletes the light
     def delete(self):
-        del super().light_array[self.light_position]
+        del self.parent.light_array[self.light_position]
         del self
 
-#object class(child of gl)
-class object(gl):
+#object class
+class object():
     #load model and pass to parent
-    def __init__(self, _model, x = 0, y = 0 , z = 0, ax = 0, ay = 0, az = 0, scale_x = 1, scale_y = 1, scale_z = 1,colour = None, ignore_mtl = False):
+    def __init__(self, parent, _model, x = 0, y = 0 , z = 0, ax = 0, ay = 0, az = 0, scale_x = 1, scale_y = 1, scale_z = 1,colour = None, ignore_mtl = False):
         ax, ay, az = math.radians(ax), math.radians(ay), math.radians(az)
         model = open(_model, 'rt')
         self.object_array = []
+        self.parent = parent
         #load .obj files
         if _model[-4:] == '.obj':
             count = 0
@@ -433,5 +435,9 @@ class object(gl):
                                 tri.append(random_colour())
                                 self.object_array.append(tri)
                                 tri = []
-        super().map_array.append(self.object_array)
-        self.map_position = super().map_array.index(self.object_array)
+        parent.map_array.append(self.object_array)
+        self.map_position = parent.map_array.index(self.object_array)
+        
+    def delete(self):
+        del self.parent.map_array[self.map_array]
+        del self
