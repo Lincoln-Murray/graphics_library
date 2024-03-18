@@ -165,7 +165,6 @@ class gl:
         self.width = _width
         self.height = _height
         self.wiremesh = False
-        self.r, self.g, self.b = 1,1,1
         self.background_colour = '#000000'
         self.outline = ''
 
