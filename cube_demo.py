@@ -14,7 +14,7 @@ cube = Main.object(renderer, model_2,-3,0,1,0,35,0, 0.5, 0.5, 0.5, None)
 
 renderer.camera_absolute(_camera_x = 0, _camera_y = 0, _camera_z = 10, _camera_angle_x = 0, _camera_angle_y = 0, _camera_angle_z = 0)
 
-light1 = Main.light(-10,-10,-10, 1,1,1)
+light1 = Main.light(renderer, -10,-10,-10, 1,1,1)
 
 #init the window and viewport
 master = Tk()
