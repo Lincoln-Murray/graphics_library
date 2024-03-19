@@ -220,8 +220,10 @@ class gl:
         for model in self.map_array:
             for wall_num in range(0,len(model)):
                 wall = model[wall_num]
-                for point in range(0,len(wall)-1):
-                    locals()["sp" + str(point) + str(wall_num)] = scale_point(wall[point][0],wall[point][1],wall[point][2], self.zfar, self.znear, self.fov, self.ar, self.camera_x, self.camera_y, self.camera_z , self.camera_angle_x, self.camera_angle_y, self.camera_angle_z)
+                point_num = 0
+                for point in wall[:-1]:
+                    locals()["sp" + str(point_num) + str(wall_num)] = scale_point(point[0],point[1],point[2], self.zfar, self.znear, self.fov, self.ar, self.camera_x, self.camera_y, self.camera_z , self.camera_angle_x, self.camera_angle_y, self.camera_angle_z)
+                    point_num += 1
                 temp_tri = render_wall_from_normalised_points(locals()["sp0"+ str(wall_num)][0],locals()["sp0"+ str(wall_num)][1],locals()["sp0"+ str(wall_num)][2],locals()["sp1"+ str(wall_num)][0],locals()["sp1"+ str(wall_num)][1],locals()["sp1"+ str(wall_num)][2],locals()["sp2"+ str(wall_num)][0],locals()["sp2"+ str(wall_num)][1],locals()["sp2"+ str(wall_num)][2],wall[len(wall)-1], self)
                 if temp_tri != None:
                     frame.append(temp_tri)
