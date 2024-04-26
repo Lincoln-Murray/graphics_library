@@ -6,7 +6,7 @@ import random
 half_height, half_width = 1,1
 
 #generates a random hexedecimal colour string in the format '#000000'
-def random_colour():
+def random_colour() -> string:
     hexlen = 0
     while hexlen != 7:
         random_number = random.randint(0, 16777215)
@@ -14,7 +14,7 @@ def random_colour():
         hexlen = len(hex_number)
     return hex_number
 
-def dim_colour(colour, scale_factor, light_attributes):
+def dim_colour(colour, scale_factor, light_attributes) -> string:
     _r, _g, _b = light_attributes[3], light_attributes[4], light_attributes[5]
     hex_colour = colour[1:]
     r, g, b = int(hex_colour[:2], 16), int(hex_colour[2:4], 16), int(hex_colour[4:], 16)
@@ -24,7 +24,7 @@ def dim_colour(colour, scale_factor, light_attributes):
     return '#%02x%02x%02x' % (r,g,b)
 
 #averages hexedecimal colours from a list in the format '#000000'
-def average_colour(colour_list):
+def average_colour(colour_list) -> string:
     r, g, b = 0,0,0
     count = 0
     for colour in colour_list:
@@ -36,7 +36,7 @@ def average_colour(colour_list):
     return '#%02x%02x%02x' % (r,g,b)
 
 #loads materials from a .mtl file
-def load_mtl(file_name):
+def load_mtl(file_name) -> list:
     file = open(file_name, "rt")
     materials = {}
     current_name = None
