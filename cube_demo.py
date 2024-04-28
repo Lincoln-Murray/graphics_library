@@ -30,7 +30,7 @@ viewport.pack(side=TOP)
 renderer.view_style(False, 0.1, '')
 
 #main loop
-def loop():
+def loop() -> None:
     start = time.time()
     viewport.create_rectangle(0,0,renderer.width,renderer.height, fill=renderer.background_colour)
     triangles = renderer.new_frame()
