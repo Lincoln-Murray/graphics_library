@@ -96,7 +96,7 @@ def get_normal_from_triangle(x1,y1,z1,x2,y2,z2,x3,y3,z3):
         return nx/normal_length, ny/normal_length, nz/normal_length
 
 #scales polygon points and applies appropriate colouring to faces
-def render_wall_from_normalised_points(x1_3d,y1_3d,z1_3d,x2_3d,y2_3d,z2_3d,x3_3d,y3_3d,z3_3d,colour,_gl):
+def render_wall_from_normalised_points(x1_3d,y1_3d,z1_3d,x2_3d,y2_3d,z2_3d,x3_3d,y3_3d,z3_3d,colour,_gl) -> list|None:
     global half_width, half_height
     if not _gl.wiremesh:
         nx,ny,nz = get_normal_from_triangle(x1_3d,y1_3d,z1_3d,x2_3d,y2_3d,z2_3d,x3_3d,y3_3d,z3_3d)
@@ -134,7 +134,7 @@ def rotate_point(axisone,axistwo,raxis, angle):
     return raxisone,raxistwo,raxis
 
 #scales a point based on the specifications of the camera(fov, location, angle, min and max distance)
-def scale_point(x,y,z, zfar, znear, fov, ar, camera_x, camera_y, camera_z ,camera_angle_x, camera_angle_y, camera_angle_z):
+def scale_point(x,y,z, zfar, znear, fov, ar, camera_x, camera_y, camera_z ,camera_angle_x, camera_angle_y, camera_angle_z) -> list:
     x,y,z = rotate_point(x,y,z, camera_angle_z)
     x,y,z = rotate_point(z,x,y, camera_angle_y)
     x,y,z = rotate_point(y,z,x, camera_angle_x)
@@ -151,7 +151,7 @@ class gl:
     map_array = []
     light_array = []
     #creates passed attributes to class variables 
-    def __init__(self, _width = 1920, _height = 1080, _fov = 55, _zfar = 1000, _znear = 0.1):
+    def __init__(self, _width = 1920, _height = 1080, _fov = 55, _zfar = 1000, _znear = 0.1) -> None:
         if _fov >= 180:
             _fov = math.radians(55)
         else:
@@ -169,7 +169,7 @@ class gl:
         self.outline = ''
 
     #sets the absolute location of the camera in global coordinates
-    def camera_absolute(self, _camera_x = None, _camera_y = None, _camera_z = None, _camera_angle_x = None, _camera_angle_y = None, _camera_angle_z = None):
+    def camera_absolute(self, _camera_x = None, _camera_y = None, _camera_z = None, _camera_angle_x = None, _camera_angle_y = None, _camera_angle_z = None) -> None:
         if _camera_x != None:
             self.camera_x = _camera_x
         if _camera_y != None:
@@ -184,7 +184,7 @@ class gl:
             self.camera_angle_z = math.radians(_camera_angle_z)
 
     #translates the location of the camera in local coordinates(mostly)
-    def move_camera(self, _camera_x = 0, _camera_y = 0, _camera_z = 0, _camera_angle_x = 0, _camera_angle_y = 0, _camera_angle_z = 0):
+    def move_camera(self, _camera_x = 0, _camera_y = 0, _camera_z = 0, _camera_angle_x = 0, _camera_angle_y = 0, _camera_angle_z = 0) -> None:
         self.camera_z += math.cos(self.camera_angle_y) * _camera_z
         self.camera_x += math.sin(self.camera_angle_y) * _camera_z
         self.camera_x += math.cos(self.camera_angle_y) * _camera_x
@@ -194,7 +194,7 @@ class gl:
         self.camera_angle_x, self.camera_angle_y, self.camera_angle_z = self.camera_angle_x + math.radians(_camera_angle_x), self.camera_angle_y + math.radians(_camera_angle_y), self.camera_angle_z + math.radians(_camera_angle_z)
 
     #defines the style and renderer specifications
-    def view_style(self, _wiremesh = False, _background = 1, outline_colour = ''):
+    def view_style(self, _wiremesh = False, _background = 1, outline_colour = '') -> None:
         #print(type(_background))
         if type(_background) != str:
             colours = []
@@ -215,7 +215,7 @@ class gl:
         self.outline = outline_colour
 
     #calls a new frame and passes all walls and triangles to other functions
-    def new_frame(self):
+    def new_frame(self) -> list:
         frame = []
         for model in self.map_array:
             for wall_num in range(0,len(model)):
@@ -232,7 +232,7 @@ class gl:
         return frame
 
     #renders an image to the desired fromat
-    def render_image(self, output_location = "images/output", file_format = '.svg', _line_thickness = 1):
+    def render_image(self, output_location = "images/output", file_format = '.svg', _line_thickness = 1) -> None:
         output = open(output_location + file_format, 'w')
         if file_format == '.svg':
             intro_string = '''<svg version="1.1" width="'''+str(self.width)+'''" height="'''+str(self.height)+'''" xmlns="http://www.w3.org/2000/svg">
@@ -252,14 +252,14 @@ class gl:
 #lighting class
 class light():
     #pass attributes to local variables
-    def __init__(self, parent, x, y, z, r, g, b):
+    def __init__(self, parent, x, y, z, r, g, b) -> None:
         self.attributes = [x,y,z, r,g,b]
         self.parent = parent
         parent.light_array.append(self.attributes)
         self.light_position = parent.light_array.index(self.attributes)
 
     #translates the light locally
-    def move_light(self,x,y,z):
+    def move_light(self,x,y,z) -> None:
         self.attributes[0] += x
         self.attributes[1] += y
         self.attributes[2] += z
@@ -268,14 +268,14 @@ class light():
         self.light_position = self.parent.light_array.index(self.attributes)
 
     #deletes the light
-    def delete(self):
+    def delete(self) -> None:
         del self.parent.light_array[self.light_position]
         del self
 
 #object class
 class object():
     #load model and pass to parent
-    def __init__(self, parent, _model, x = 0, y = 0 , z = 0, ax = 0, ay = 0, az = 0, scale_x = 1, scale_y = 1, scale_z = 1,colour = None, ignore_mtl = False):
+    def __init__(self, parent, _model, x = 0, y = 0 , z = 0, ax = 0, ay = 0, az = 0, scale_x = 1, scale_y = 1, scale_z = 1,colour = None, ignore_mtl = False) -> None:
         ax, ay, az = math.radians(ax), math.radians(ay), math.radians(az)
         model = open(_model, 'rt')
         self.object_array = []
@@ -439,6 +439,6 @@ class object():
         parent.map_array.append(self.object_array)
         self.map_position = parent.map_array.index(self.object_array)
         
-    def delete(self):
+    def delete(self) -> None:
         del self.parent.map_array[self.map_array]
         del self
