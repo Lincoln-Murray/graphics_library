@@ -2,7 +2,6 @@
 import math
 import random
 import string
-import ctypes
 
 #global variables
 half_height, half_width = 1,1
