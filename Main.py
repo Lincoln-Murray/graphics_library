@@ -1,6 +1,7 @@
 #library imports
 import math
 import random
+import string
 
 #global variables
 half_height, half_width = 1,1
@@ -277,7 +278,7 @@ class object():
     #load model and pass to parent
     def __init__(self, parent, _model, x = 0, y = 0 , z = 0, ax = 0, ay = 0, az = 0, scale_x = 1, scale_y = 1, scale_z = 1,colour = None, ignore_mtl = False) -> None:
         ax, ay, az = math.radians(ax), math.radians(ay), math.radians(az)
-        model = open(_model, 'rt')
+        model = open(_model, 'rt', encoding='cp1252')
         self.object_array = []
         self.parent = parent
         #load .obj files
@@ -396,11 +397,11 @@ class object():
                             pass
                         elif bytenum >= 81 and bytenum <=84:
                             if bytenum == 81:
-                                var_temp = int(byte).to_bytes()
+                                var_temp = int(byte)
                             elif bytenum == 82 or bytenum == 83 or bytenum == 84:
-                                var_temp = int(byte).to_bytes() + var_temp
+                                var_temp = int(byte) + var_temp
                             if bytenum == 84:
-                                tri_count = int.from_bytes(var_temp)
+                                tri_count = int(var_temp)
                         elif ((bytenum-85) % 50) == 0:
                             new_tri = True
                             var_temp = None
@@ -418,11 +419,11 @@ class object():
                         else:
                             temp+=1
                             if temp == 1 or temp == 5 or temp == 9:
-                                var_temp = int(byte).to_bytes()
+                                var_temp = int(byte)
                             else:
-                                var_temp = int(byte).to_bytes() + var_temp
+                                var_temp = int(byte) + var_temp
                             if temp == 4 or temp == 8 or temp == 12:
-                                temp_vertex.append(int.from_bytes(var_temp, signed = True))
+                                temp_vertex.append(int(var_temp))
                             if temp == 12:
                                 temp = 0
                                 temp_2+=1
