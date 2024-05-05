@@ -6,14 +6,12 @@ import time
 start = time.time()
 
 #init the models and library class instances
-model = 'models/teapot.obj'
+model = 'models/cube.stl'
 model_2 = 'models/cube.obj'
 
 renderer = Main.gl(1920,1080, 55, 1000, 0.1)
-teapot_1 = Main.object(renderer, model,-4.5,-1,0,0,45,180, 1, 1, 1, '#FF0000')
-teapot_2 = Main.object(renderer, model,4.5,-1,0,0,315,180, 1, 1, 1, '#0000FF')
-cube = Main.object(renderer, model_2,0,0,0,0,35,0, 1, 1, 1, '#00FF00')
-light1 = Main.light(renderer, 0, 0, 10, 1, 1, 1)
+cube = Main.object(renderer, model,0,0,1,0,35,0, 0.0000001, 0.0000001, 0.0000001, None)
+cube = Main.object(renderer, model_2,-3,0,1,0,35,0, 0.5, 0.5, 0.5, None)
 
 renderer.camera_absolute(_camera_x = 0, _camera_y = 0, _camera_z = 10, _camera_angle_x = 0, _camera_angle_y = 0, _camera_angle_z = 0)
 
