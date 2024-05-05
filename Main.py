@@ -218,7 +218,6 @@ class gl:
     #calls a new frame and passes all walls and triangles to other functions
     def new_frame(self) -> list:
         frame = []
-        loc = locals()
         sp = {
             0: {},
             1: {},
@@ -231,7 +230,7 @@ class gl:
                 for point in wall[:-1]:
                     sp[point_num][wall_num] = scale_point(point[0],point[1],point[2], self.zfar, self.znear, self.fov, self.ar, self.camera_x, self.camera_y, self.camera_z , self.camera_angle_x, self.camera_angle_y, self.camera_angle_z)
                     point_num += 1
-                    
+
                 temp_tri = render_wall_from_normalised_points(sp[0][wall_num][0],sp[0][wall_num][1],sp[0][wall_num][2],sp[1][wall_num][0],sp[1][wall_num][1],sp[1][wall_num][2],sp[2][wall_num][0],sp[2][wall_num][1],sp[2][wall_num][2],wall[len(wall)-1], self)
                 if temp_tri != None:
                     frame.append(temp_tri)
