@@ -2,6 +2,7 @@
 import math
 import random
 import string
+import ctypes
 
 #global variables
 half_height, half_width = 1,1
@@ -97,13 +98,13 @@ def get_normal_from_triangle(x1,y1,z1,x2,y2,z2,x3,y3,z3):
         return nx/normal_length, ny/normal_length, nz/normal_length
 
 #scales polygon points and applies appropriate colouring to faces
-def render_wall_from_normalised_points(x1_3d,y1_3d,z1_3d,x2_3d,y2_3d,z2_3d,x3_3d,y3_3d,z3_3d,colour,_gl) -> list|None:
+def render_wall_from_normalised_points(x1_3d,y1_3d,z1_3d,x2_3d,y2_3d,z2_3d,x3_3d,y3_3d,z3_3d,colour,wiremesh,light_array,outline) -> list:
     global half_width, half_height
-    if not _gl.wiremesh:
+    if not wiremesh:
         nx,ny,nz = get_normal_from_triangle(x1_3d,y1_3d,z1_3d,x2_3d,y2_3d,z2_3d,x3_3d,y3_3d,z3_3d)
         if nz <= 0:
             colour_list = []
-            for light in _gl.light_array:
+            for light in light_array:
                 x,y,z = light[0], light[1], light[2]
                 length = (x**2 + y**2 + z**2)**0.5                
                 colour_x = dim_colour(colour,-nx*(x/length), light)
@@ -115,7 +116,7 @@ def render_wall_from_normalised_points(x1_3d,y1_3d,z1_3d,x2_3d,y2_3d,z2_3d,x3_3d
     else:
         nz = -1
         colour = ''
-    _outline = _gl.outline
+    _outline = outline
 
     if nz <=0:
         x1_2d = x1_3d*half_width+half_width
@@ -130,8 +131,10 @@ def render_wall_from_normalised_points(x1_3d,y1_3d,z1_3d,x2_3d,y2_3d,z2_3d,x3_3d
 
 #rotates a point around the raxis(rotation axis) by an angle in radians
 def rotate_point(axisone,axistwo,raxis, angle):
-    raxisone = axisone * math.cos(angle) - axistwo * math.sin(angle)
-    raxistwo = axisone * math.sin(angle) + axistwo * math.cos(angle)
+    sin_angle = math.sin(angle)
+    cos_angle = math.cos(angle)
+    raxisone = axisone * cos_angle - axistwo * sin_angle
+    raxistwo = axisone * sin_angle + axistwo * cos_angle
     return raxisone,raxistwo,raxis
 
 #scales a point based on the specifications of the camera(fov, location, angle, min and max distance)
@@ -231,7 +234,7 @@ class gl:
                     sp[point_num][wall_num] = scale_point(point[0],point[1],point[2], self.zfar, self.znear, self.fov, self.ar, self.camera_x, self.camera_y, self.camera_z , self.camera_angle_x, self.camera_angle_y, self.camera_angle_z)
                     point_num += 1
 
-                temp_tri = render_wall_from_normalised_points(sp[0][wall_num][0],sp[0][wall_num][1],sp[0][wall_num][2],sp[1][wall_num][0],sp[1][wall_num][1],sp[1][wall_num][2],sp[2][wall_num][0],sp[2][wall_num][1],sp[2][wall_num][2],wall[len(wall)-1], self)
+                temp_tri = render_wall_from_normalised_points(sp[0][wall_num][0],sp[0][wall_num][1],sp[0][wall_num][2],sp[1][wall_num][0],sp[1][wall_num][1],sp[1][wall_num][2],sp[2][wall_num][0],sp[2][wall_num][1],sp[2][wall_num][2],wall[len(wall)-1], self.wiremesh, self.light_array, self.outline)
                 if temp_tri != None:
                     frame.append(temp_tri)
                     #print(temp_tri)
