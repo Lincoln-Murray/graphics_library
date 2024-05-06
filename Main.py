@@ -148,7 +148,7 @@ def rotate_point(axisone,axistwo,raxis, angle):
     return raxisone,raxistwo,raxis
 
 #scales a point based on the specifications of the camera(fov, location, angle, min and max distance)
-def scale_point(x,y,z, zfar, znear, fov, ar, camera_x, camera_y, camera_z ,camera_angle_x, camera_angle_y, camera_angle_z) -> list:
+def scale_point(x,y,z, zfar, znear, fov, ar, camera_x, camera_y, camera_z ,camera_angle_x, camera_angle_y, camera_angle_z) -> Tuple:
     x,y,z = rotate_point(x,y,z, camera_angle_z)
     x,y,z = rotate_point(z,x,y, camera_angle_y)
     x,y,z = rotate_point(y,z,x, camera_angle_x)
@@ -158,7 +158,7 @@ def scale_point(x,y,z, zfar, znear, fov, ar, camera_x, camera_y, camera_z ,camer
         x = (ar*(1/tan_half_fov)*x)/z
         y = ((1/tan_half_fov)*y)/z
         z = z*(zfar/(zfar-znear))-((zfar*znear)/(zfar-znear))
-    return [x,y,z]
+    return (x,y,z)
 
 #main graphics_library class
 class gl:
