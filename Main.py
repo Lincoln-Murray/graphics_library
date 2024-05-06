@@ -152,8 +152,9 @@ def scale_point(x,y,z, zfar, znear, fov, ar, camera_x, camera_y, camera_z ,camer
     x,y,z = rotate_point(y,z,x, camera_angle_x)
     x,y,z = camera_x+x,camera_y+y,camera_z+z
     if z != 0:
-        x = (ar*(1/math.tan(fov/2))*x)/z
-        y = ((1/math.tan(fov/2))*y)/z
+        tan_half_fov = math.tan(fov/2)
+        x = (ar*(1/tan_half_fov)*x)/z
+        y = ((1/tan_half_fov)*y)/z
         z = z*(zfar/(zfar-znear))-((zfar*znear)/(zfar-znear))
     return [x,y,z]
 
