@@ -2,9 +2,14 @@
 import math
 import random
 import string
+from typing import Tuple, List
 
 #global variables
 half_height, half_width = 1,1
+
+# convert (r,g,b) to hex
+def _rgb_to_hex(rgb_colour: Tuple[int] | List[int]) -> string:
+    return '#%02x%02x%02x' % (rgb_colour[0], rgb_colour[1], rgb_colour[2])
 
 #generates a random hexedecimal colour string in the format '#000000'
 def random_colour() -> string:
@@ -15,26 +20,29 @@ def random_colour() -> string:
         hexlen = len(hex_number)
     return hex_number
 
-def dim_colour(colour, scale_factor, light_attributes) -> string:
+def dim_colour(colour, scale_factor, light_attributes) -> Tuple[int]:
     _r, _g, _b = light_attributes[3], light_attributes[4], light_attributes[5]
-    hex_colour = colour[1:]
-    r, g, b = int(hex_colour[:2], 16), int(hex_colour[2:4], 16), int(hex_colour[4:], 16)
+
+    r, g, b = colour
     r = max(0, min(255, int(r * scale_factor*_r)))
     g = max(0, min(255, int(g * scale_factor*_g)))
     b = max(0, min(255, int(b * scale_factor*_b)))
-    return '#%02x%02x%02x' % (r,g,b)
 
-#averages hexedecimal colours from a list in the format '#000000'
-def average_colour(colour_list) -> string:
+    return (r, g, b)
+
+#averages rgb colours from a list in the format 'r, g, b'
+def average_colour(colour_list) -> Tuple[int]:
     r, g, b = 0,0,0
-    count = 0
-    for colour in colour_list:
-        hex_colour = colour[1:]
-        r, g, b = r + int(hex_colour[:2], 16), g + int(hex_colour[2:4], 16), b + int(hex_colour[4:], 16)
-        count+=1
+
+    for count, colour in enumerate(colour_list):
+        r, g, b = r + colour[0], g + colour[1], b + colour[2]
+
+    print(count)
+
     if count!=0:
         r, g, b = int(r/count), int(g/count), int(b/count)
-    return '#%02x%02x%02x' % (r,g,b)
+
+    return (r, g, b)
 
 #loads materials from a .mtl file
 def load_mtl(file_name) -> list:
@@ -99,6 +107,9 @@ def get_normal_from_triangle(x1,y1,z1,x2,y2,z2,x3,y3,z3):
 #scales polygon points and applies appropriate colouring to faces
 def render_wall_from_normalised_points(x1_3d,y1_3d,z1_3d,x2_3d,y2_3d,z2_3d,x3_3d,y3_3d,z3_3d,colour,wiremesh,light_array,outline) -> list:
     global half_width, half_height
+
+    colour = (int(colour[1:3], 16), int(colour[3:5], 16), int(colour[5:], 16))
+
     if not wiremesh:
         nx,ny,nz = get_normal_from_triangle(x1_3d,y1_3d,z1_3d,x2_3d,y2_3d,z2_3d,x3_3d,y3_3d,z3_3d)
         if nz <= 0:
@@ -109,9 +120,9 @@ def render_wall_from_normalised_points(x1_3d,y1_3d,z1_3d,x2_3d,y2_3d,z2_3d,x3_3d
                 colour_x = dim_colour(colour,-nx*(x/length), light)
                 colour_y = dim_colour(colour,-ny*(y/length), light)
                 colour_z = dim_colour(colour,-nz*(z/length), light)
-                colour_list.append(average_colour([colour_x, colour_y, colour_z]))
+                colour_list.append(average_colour((colour_x, colour_y, colour_z)))
                 pass
-            colour = average_colour(colour_list)
+            colour = _rgb_to_hex(average_colour(colour_list))
     else:
         nz = -1
         colour = ''
@@ -202,9 +213,9 @@ class gl:
         if type(_background) != str:
             colours = []
             for light in self.light_array:
-                colours.append('#%02x%02x%02x' % (light[3],light[4],light[5]))
+                colours.append((light[3],light[4],light[5]))
             if colours != []:
-                hex_colour = average_colour(colours)[1:]
+                hex_colour = _rgb_to_hex(average_colour(colours))[1:]
             else:
                 hex_colour = '000000'
             _r, _g, _b = int(hex_colour[:2], 16), int(hex_colour[2:4], 16), int(hex_colour[4:], 16)
