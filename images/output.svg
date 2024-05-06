@@ -759,10 +759,10 @@
   <polygon points="689 428 686 426 665 424 " stroke="#010000" fill="#010000" stroke-width="1"/>
   <polygon points="1251 426 1254 424 1233 426 " stroke="#000001" fill="#000001" stroke-width="1"/>
   <polygon points="1251 426 1233 426 1230 428 " stroke="#000001" fill="#000001" stroke-width="1"/>
-  <polygon points="568 404 586 403 569 403 " stroke="#0e0000" fill="#0e0000" stroke-width="1"/>
-  <polygon points="569 403 586 403 587 402 " stroke="#010000" fill="#010000" stroke-width="1"/>
   <polygon points="509 404 530 404 530 403 " stroke="#110000" fill="#110000" stroke-width="1"/>
   <polygon points="509 404 530 403 509 403 " stroke="#110000" fill="#110000" stroke-width="1"/>
+  <polygon points="568 404 586 403 569 403 " stroke="#0e0000" fill="#0e0000" stroke-width="1"/>
+  <polygon points="569 403 586 403 587 402 " stroke="#010000" fill="#010000" stroke-width="1"/>
   <polygon points="1334 404 1351 404 1350 403 " stroke="#00000e" fill="#00000e" stroke-width="1"/>
   <polygon points="1334 404 1350 403 1333 403 " stroke="#00000e" fill="#00000e" stroke-width="1"/>
   <polygon points="1389 404 1410 403 1389 403 " stroke="#000011" fill="#000011" stroke-width="1"/>
@@ -1091,10 +1091,10 @@
   <polygon points="1276 397 1278 399 1278 397 " stroke="#000001" fill="#000001" stroke-width="1"/>
   <polygon points="1521 399 1540 397 1539 394 " stroke="#000008" fill="#000008" stroke-width="1"/>
   <polygon points="1521 399 1539 394 1520 397 " stroke="#000008" fill="#000008" stroke-width="1"/>
-  <polygon points="380 394 399 397 399 395 " stroke="#080000" fill="#080000" stroke-width="1"/>
-  <polygon points="380 394 399 395 380 392 " stroke="#080000" fill="#080000" stroke-width="1"/>
   <polygon points="641 397 643 392 641 395 " stroke="#000000" fill="#000000" stroke-width="1"/>
   <polygon points="641 395 643 392 644 391 " stroke="#000000" fill="#000000" stroke-width="1"/>
+  <polygon points="380 394 399 397 399 395 " stroke="#080000" fill="#080000" stroke-width="1"/>
+  <polygon points="380 394 399 395 380 392 " stroke="#080000" fill="#080000" stroke-width="1"/>
   <polygon points="1276 394 1278 397 1278 395 " stroke="#000000" fill="#000000" stroke-width="1"/>
   <polygon points="1276 394 1278 395 1276 392 " stroke="#000000" fill="#000000" stroke-width="1"/>
   <polygon points="1520 397 1539 392 1520 395 " stroke="#000008" fill="#000008" stroke-width="1"/>
@@ -1267,10 +1267,10 @@
   <polygon points="349 386 362 388 348 384 " stroke="#040000" fill="#040000" stroke-width="1"/>
   <polygon points="1556 389 1571 384 1557 388 " stroke="#000004" fill="#000004" stroke-width="1"/>
   <polygon points="1557 388 1571 384 1572 384 " stroke="#000000" fill="#000000" stroke-width="1"/>
-  <polygon points="347 394 363 394 348 391 " stroke="#060000" fill="#060000" stroke-width="1"/>
-  <polygon points="348 391 363 394 363 391 " stroke="#060000" fill="#060000" stroke-width="1"/>
   <polygon points="1556 394 1571 391 1570 388 " stroke="#000006" fill="#000006" stroke-width="1"/>
   <polygon points="1556 394 1570 388 1556 391 " stroke="#000006" fill="#000006" stroke-width="1"/>
+  <polygon points="347 394 363 394 348 391 " stroke="#060000" fill="#060000" stroke-width="1"/>
+  <polygon points="348 391 363 394 363 391 " stroke="#060000" fill="#060000" stroke-width="1"/>
   <polygon points="349 388 363 391 363 389 " stroke="#050000" fill="#050000" stroke-width="1"/>
   <polygon points="349 388 363 389 349 386 " stroke="#050000" fill="#050000" stroke-width="1"/>
   <polygon points="1556 391 1570 386 1556 389 " stroke="#000005" fill="#000005" stroke-width="1"/>
@@ -1606,10 +1606,10 @@
   <polygon points="510 362 513 365 517 366 " stroke="#020000" fill="#020000" stroke-width="1"/>
   <polygon points="1414 357 1409 362 1412 362 " stroke="#000006" fill="#000006" stroke-width="1"/>
   <polygon points="1412 362 1409 362 1402 366 " stroke="#000002" fill="#000002" stroke-width="1"/>
-  <polygon points="461 338 461 338 468 345 " stroke="#000000" fill="#000000" stroke-width="1"/>
-  <polygon points="461 338 468 345 467 344 " stroke="#000000" fill="#000000" stroke-width="1"/>
   <polygon points="516 338 509 344 512 345 " stroke="#080000" fill="#080000" stroke-width="1"/>
   <polygon points="512 345 509 344 506 351 " stroke="#080000" fill="#080000" stroke-width="1"/>
+  <polygon points="461 338 461 338 468 345 " stroke="#000000" fill="#000000" stroke-width="1"/>
+  <polygon points="461 338 468 345 467 344 " stroke="#000000" fill="#000000" stroke-width="1"/>
   <polygon points="1458 338 1452 344 1451 345 " stroke="#000000" fill="#000000" stroke-width="1"/>
   <polygon points="1406 338 1403 338 1407 345 " stroke="#000008" fill="#000008" stroke-width="1"/>
   <polygon points="1406 338 1407 345 1410 344 " stroke="#000008" fill="#000008" stroke-width="1"/>
@@ -1682,10 +1682,10 @@
   <polygon points="1400 325 1395 326 1398 332 " stroke="#000008" fill="#000008" stroke-width="1"/>
   <polygon points="1400 325 1398 332 1402 331 " stroke="#000008" fill="#000008" stroke-width="1"/>
   <polygon points="1464 332 1464 331 1458 338 " stroke="#000000" fill="#000000" stroke-width="1"/>
-  <polygon points="469 343 468 344 472 350 " stroke="#040000" fill="#040000" stroke-width="1"/>
-  <polygon points="469 343 472 350 473 350 " stroke="#040000" fill="#040000" stroke-width="1"/>
   <polygon points="505 344 500 350 503 350 " stroke="#0b0000" fill="#0b0000" stroke-width="1"/>
   <polygon points="503 350 500 350 500 356 " stroke="#0c0000" fill="#0c0000" stroke-width="1"/>
+  <polygon points="469 343 468 344 472 350 " stroke="#040000" fill="#040000" stroke-width="1"/>
+  <polygon points="469 343 472 350 473 350 " stroke="#040000" fill="#040000" stroke-width="1"/>
   <polygon points="1451 344 1446 350 1447 350 " stroke="#000004" fill="#000004" stroke-width="1"/>
   <polygon points="1417 343 1414 344 1416 350 " stroke="#00000c" fill="#00000c" stroke-width="1"/>
   <polygon points="1417 343 1416 350 1419 350 " stroke="#00000b" fill="#00000b" stroke-width="1"/>
@@ -2002,8 +2002,8 @@
   <polygon points="1467 319 1465 318 1465 323 " stroke="#000003" fill="#000003" stroke-width="1"/>
   <polygon points="1467 319 1465 323 1467 324 " stroke="#000003" fill="#000003" stroke-width="1"/>
   <polygon points="1411 318 1405 319 1405 324 " stroke="#00000b" fill="#00000b" stroke-width="1"/>
-  <polygon points="454 318 452 324 454 323 " stroke="#030000" fill="#030000" stroke-width="1"/>
   <polygon points="514 324 508 323 506 329 " stroke="#0c0000" fill="#0c0000" stroke-width="1"/>
+  <polygon points="454 318 452 324 454 323 " stroke="#030000" fill="#030000" stroke-width="1"/>
   <polygon points="1411 318 1405 324 1411 323 " stroke="#00000b" fill="#00000b" stroke-width="1"/>
   <polygon points="1467 324 1465 323 1462 329 " stroke="#000004" fill="#000004" stroke-width="1"/>
   <polygon points="329 384 337 387 338 384 " stroke="#030000" fill="#030000" stroke-width="1"/>
@@ -2156,9 +2156,9 @@
   <polygon points="1457 314 1459 316 1463 317 " stroke="#000003" fill="#000003" stroke-width="1"/>
   <polygon points="1425 314 1419 314 1418 317 " stroke="#000008" fill="#000008" stroke-width="1"/>
   <polygon points="1419 314 1411 318 1418 317 " stroke="#000007" fill="#000007" stroke-width="1"/>
-  <polygon points="456 317 454 318 454 323 " stroke="#060000" fill="#060000" stroke-width="1"/>
   <polygon points="508 318 501 317 501 322 " stroke="#0e0000" fill="#0e0000" stroke-width="1"/>
   <polygon points="508 318 501 322 508 323 " stroke="#0e0000" fill="#0e0000" stroke-width="1"/>
+  <polygon points="456 317 454 318 454 323 " stroke="#060000" fill="#060000" stroke-width="1"/>
   <polygon points="1465 318 1463 317 1463 322 " stroke="#000006" fill="#000006" stroke-width="1"/>
   <polygon points="1465 318 1463 322 1465 323 " stroke="#000006" fill="#000006" stroke-width="1"/>
   <polygon points="1418 317 1411 318 1411 323 " stroke="#00000e" fill="#00000e" stroke-width="1"/>
@@ -2727,9 +2727,9 @@
   <polygon points="1602 372 1597 368 1599 370 " stroke="#000000" fill="#000000" stroke-width="1"/>
   <polygon points="1602 372 1599 370 1604 374 " stroke="#000000" fill="#000000" stroke-width="1"/>
   <polygon points="1362 368 1336 372 1335 374 " stroke="#000007" fill="#000007" stroke-width="1"/>
-  <polygon points="1598 645 1602 643 1607 641 " stroke="#000000" fill="#000000" stroke-width="1"/>
   <polygon points="555 647 583 643 558 645 " stroke="#030000" fill="#030000" stroke-width="1"/>
   <polygon points="558 645 583 643 586 641 " stroke="#060000" fill="#060000" stroke-width="1"/>
+  <polygon points="1598 645 1602 643 1607 641 " stroke="#000000" fill="#000000" stroke-width="1"/>
   <polygon points="317 643 321 645 317 643 " stroke="#000000" fill="#000000" stroke-width="1"/>
   <polygon points="317 643 317 643 312 641 " stroke="#000000" fill="#000000" stroke-width="1"/>
   <polygon points="1336 643 1361 645 1360 643 " stroke="#000006" fill="#000006" stroke-width="1"/>
@@ -2793,14 +2793,14 @@
   <polygon points="1332 639 1359 638 1332 636 " stroke="#00000c" fill="#00000c" stroke-width="1"/>
   <polygon points="1602 643 1609 639 1604 641 " stroke="#000001" fill="#000001" stroke-width="1"/>
   <polygon points="1604 641 1609 639 1610 636 " stroke="#000002" fill="#000002" stroke-width="1"/>
+  <polygon points="587 380 560 377 564 394 " stroke="#0a0000" fill="#0a0000" stroke-width="1"/>
+  <polygon points="587 380 564 394 592 398 " stroke="#0a0000" fill="#0a0000" stroke-width="1"/>
   <polygon points="1610 380 1605 377 1615 394 " stroke="#000001" fill="#000001" stroke-width="1"/>
   <polygon points="1610 380 1615 394 1620 398 " stroke="#000001" fill="#000001" stroke-width="1"/>
   <polygon points="1612 633 1605 638 1610 636 " stroke="#000001" fill="#000001" stroke-width="1"/>
   <polygon points="1604 641 1610 636 1605 638 " stroke="#000002" fill="#000002" stroke-width="1"/>
   <polygon points="317 373 309 380 314 377 " stroke="#010000" fill="#010000" stroke-width="1"/>
   <polygon points="314 377 309 380 299 398 " stroke="#010000" fill="#010000" stroke-width="1"/>
-  <polygon points="587 380 560 377 564 394 " stroke="#0a0000" fill="#0a0000" stroke-width="1"/>
-  <polygon points="587 380 564 394 592 398 " stroke="#0a0000" fill="#0a0000" stroke-width="1"/>
   <polygon points="588 633 560 638 587 636 " stroke="#0a0000" fill="#0a0000" stroke-width="1"/>
   <polygon points="312 635 307 633 309 636 " stroke="#010000" fill="#010000" stroke-width="1"/>
   <polygon points="312 635 309 636 314 638 " stroke="#010000" fill="#010000" stroke-width="1"/>
@@ -2896,12 +2896,12 @@
   <polygon points="1459 364 1443 365 1464 365 " stroke="#000000" fill="#000000" stroke-width="1"/>
   <polygon points="442 364 416 365 435 364 " stroke="#000000" fill="#000000" stroke-width="1"/>
   <polygon points="1477 364 1464 365 1484 364 " stroke="#000000" fill="#000000" stroke-width="1"/>
+  <polygon points="604 611 569 620 599 618 " stroke="#080000" fill="#080000" stroke-width="1"/>
+  <polygon points="599 618 569 620 566 626 " stroke="#080000" fill="#080000" stroke-width="1"/>
   <polygon points="1644 611 1629 620 1634 618 " stroke="#000000" fill="#000000" stroke-width="1"/>
   <polygon points="1634 618 1629 620 1619 626 " stroke="#000000" fill="#000000" stroke-width="1"/>
-  <polygon points="604 611 569 620 599 618 " stroke="#080000" fill="#080000" stroke-width="1"/>
   <polygon points="280 612 275 611 285 618 " stroke="#000000" fill="#000000" stroke-width="1"/>
   <polygon points="280 612 285 618 290 620 " stroke="#000000" fill="#000000" stroke-width="1"/>
-  <polygon points="599 618 569 620 566 626 " stroke="#080000" fill="#080000" stroke-width="1"/>
   <polygon points="1346 612 1315 611 1320 618 " stroke="#000008" fill="#000008" stroke-width="1"/>
   <polygon points="1346 612 1320 618 1350 620 " stroke="#000008" fill="#000008" stroke-width="1"/>
   <polygon points="528 649 555 647 558 645 " stroke="#030000" fill="#030000" stroke-width="1"/>
@@ -2997,10 +2997,10 @@
   <polygon points="499 651 525 650 528 649 " stroke="#010000" fill="#010000" stroke-width="1"/>
   <polygon points="1394 650 1420 651 1419 650 " stroke="#000001" fill="#000001" stroke-width="1"/>
   <polygon points="1394 650 1419 650 1391 649 " stroke="#000001" fill="#000001" stroke-width="1"/>
-  <polygon points="330 367 317 373 327 370 " stroke="#030000" fill="#030000" stroke-width="1"/>
-  <polygon points="327 370 317 373 314 377 " stroke="#030000" fill="#030000" stroke-width="1"/>
   <polygon points="559 373 530 370 531 374 " stroke="#0d0000" fill="#0d0000" stroke-width="1"/>
   <polygon points="559 373 531 374 560 377 " stroke="#0d0000" fill="#0d0000" stroke-width="1"/>
+  <polygon points="330 367 317 373 327 370 " stroke="#030000" fill="#030000" stroke-width="1"/>
+  <polygon points="327 370 317 373 314 377 " stroke="#030000" fill="#030000" stroke-width="1"/>
   <polygon points="1389 367 1360 373 1389 370 " stroke="#00000b" fill="#00000b" stroke-width="1"/>
   <polygon points="1602 373 1592 370 1594 374 " stroke="#000003" fill="#000003" stroke-width="1"/>
   <polygon points="1602 373 1594 374 1605 377 " stroke="#000003" fill="#000003" stroke-width="1"/>
@@ -3213,9 +3213,9 @@
   <polygon points="1678 535 1673 535 1674 552 " stroke="#000001" fill="#000001" stroke-width="1"/>
   <polygon points="1678 535 1674 552 1679 551 " stroke="#000001" fill="#000001" stroke-width="1"/>
   <polygon points="1333 535 1297 535 1297 551 " stroke="#00000c" fill="#00000c" stroke-width="1"/>
+  <polygon points="622 551 587 552 586 567 " stroke="#0c0000" fill="#0c0000" stroke-width="1"/>
   <polygon points="1679 551 1674 552 1672 567 " stroke="#000001" fill="#000001" stroke-width="1"/>
   <polygon points="246 535 240 551 245 552 " stroke="#010000" fill="#010000" stroke-width="1"/>
-  <polygon points="622 551 587 552 586 567 " stroke="#0c0000" fill="#0c0000" stroke-width="1"/>
   <polygon points="1333 535 1297 551 1332 552 " stroke="#00000c" fill="#00000c" stroke-width="1"/>
   <polygon points="315 392 294 412 305 409 " stroke="#040000" fill="#040000" stroke-width="1"/>
   <polygon points="568 412 535 409 537 427 " stroke="#0e0000" fill="#0e0000" stroke-width="1"/>
@@ -3530,11 +3530,11 @@
   <polygon points="1419 644 1450 645 1450 642 " stroke="#00001b" fill="#00001b" stroke-width="1"/>
   <polygon points="1419 644 1450 642 1419 641 " stroke="#00001b" fill="#00001b" stroke-width="1"/>
   <polygon points="362 366 340 372 360 370 " stroke="#0d0000" fill="#0d0000" stroke-width="1"/>
+  <polygon points="500 372 469 370 468 388 " stroke="#160000" fill="#160000" stroke-width="1"/>
+  <polygon points="500 372 468 388 501 389 " stroke="#160000" fill="#160000" stroke-width="1"/>
   <polygon points="360 370 340 372 331 389 " stroke="#0e0000" fill="#0e0000" stroke-width="1"/>
   <polygon points="1581 638 1559 642 1579 641 " stroke="#00000e" fill="#00000e" stroke-width="1"/>
   <polygon points="1559 645 1579 641 1559 642 " stroke="#000012" fill="#000012" stroke-width="1"/>
-  <polygon points="500 372 469 370 468 388 " stroke="#160000" fill="#160000" stroke-width="1"/>
-  <polygon points="500 372 468 388 501 389 " stroke="#160000" fill="#160000" stroke-width="1"/>
   <polygon points="500 638 469 642 500 641 " stroke="#160000" fill="#160000" stroke-width="1"/>
   <polygon points="358 639 338 638 340 641 " stroke="#0e0000" fill="#0e0000" stroke-width="1"/>
   <polygon points="358 639 340 641 360 642 " stroke="#0e0000" fill="#0e0000" stroke-width="1"/>
@@ -3597,9 +3597,9 @@
   <polygon points="1553 361 1532 362 1555 363 " stroke="#00000b" fill="#00000b" stroke-width="1"/>
   <polygon points="1478 360 1449 361 1449 363 " stroke="#00000f" fill="#00000f" stroke-width="1"/>
   <polygon points="586 567 544 582 584 581 " stroke="#0f0000" fill="#0f0000" stroke-width="1"/>
+  <polygon points="584 581 544 582 543 594 " stroke="#0e0000" fill="#0e0000" stroke-width="1"/>
   <polygon points="260 568 247 567 252 581 " stroke="#040000" fill="#040000" stroke-width="1"/>
   <polygon points="260 568 252 581 265 582 " stroke="#040000" fill="#040000" stroke-width="1"/>
-  <polygon points="584 581 544 582 543 594 " stroke="#0e0000" fill="#0e0000" stroke-width="1"/>
   <polygon points="1672 567 1654 582 1667 581 " stroke="#000004" fill="#000004" stroke-width="1"/>
   <polygon points="1373 568 1333 567 1335 581 " stroke="#00000f" fill="#00000f" stroke-width="1"/>
   <polygon points="1373 568 1335 581 1375 582 " stroke="#00000f" fill="#00000f" stroke-width="1"/>
@@ -3659,9 +3659,9 @@
   <polygon points="1373 552 1332 552 1333 567 " stroke="#000010" fill="#000010" stroke-width="1"/>
   <polygon points="1373 552 1333 567 1373 568 " stroke="#000010" fill="#000010" stroke-width="1"/>
   <polygon points="416 359 390 359 415 359 " stroke="#000000" fill="#000000" stroke-width="1"/>
-  <polygon points="415 359 390 359 388 360 " stroke="#070000" fill="#070000" stroke-width="1"/>
   <polygon points="442 359 415 359 414 360 " stroke="#080000" fill="#080000" stroke-width="1"/>
   <polygon points="442 359 414 360 441 360 " stroke="#080000" fill="#080000" stroke-width="1"/>
+  <polygon points="415 359 390 359 388 360 " stroke="#070000" fill="#070000" stroke-width="1"/>
   <polygon points="1503 359 1477 359 1504 359 " stroke="#000001" fill="#000001" stroke-width="1"/>
   <polygon points="1529 359 1504 359 1505 360 " stroke="#000007" fill="#000007" stroke-width="1"/>
   <polygon points="1529 359 1505 360 1531 360 " stroke="#000007" fill="#000007" stroke-width="1"/>
@@ -3841,10 +3841,10 @@
   <polygon points="1480 646 1509 643 1480 643 " stroke="#00003e" fill="#00003e" stroke-width="1"/>
   <polygon points="411 365 383 369 410 369 " stroke="#1b0000" fill="#1b0000" stroke-width="1"/>
   <polygon points="1508 365 1480 369 1509 369 " stroke="#00001d" fill="#00001d" stroke-width="1"/>
-  <polygon points="410 369 383 369 377 387 " stroke="#1f0000" fill="#1f0000" stroke-width="1"/>
-  <polygon points="383 369 352 388 377 387 " stroke="#160000" fill="#160000" stroke-width="1"/>
   <polygon points="439 369 410 369 405 386 " stroke="#220000" fill="#220000" stroke-width="1"/>
   <polygon points="439 369 405 386 436 387 " stroke="#220000" fill="#220000" stroke-width="1"/>
+  <polygon points="410 369 383 369 377 387 " stroke="#1f0000" fill="#1f0000" stroke-width="1"/>
+  <polygon points="383 369 352 388 377 387 " stroke="#160000" fill="#160000" stroke-width="1"/>
   <polygon points="438 640 410 643 439 643 " stroke="#200000" fill="#200000" stroke-width="1"/>
   <polygon points="409 640 382 640 383 643 " stroke="#1e0000" fill="#1e0000" stroke-width="1"/>
   <polygon points="409 640 383 643 410 643 " stroke="#1e0000" fill="#1e0000" stroke-width="1"/>
@@ -3885,12 +3885,12 @@
   <polygon points="1512 636 1482 636 1481 640 " stroke="#000010" fill="#000010" stroke-width="1"/>
   <polygon points="1512 636 1481 640 1510 640 " stroke="#000010" fill="#000010" stroke-width="1"/>
   <polygon points="1537 640 1510 640 1509 643 " stroke="#00001e" fill="#00001e" stroke-width="1"/>
-  <polygon points="1609 615 1578 624 1600 623 " stroke="#000009" fill="#000009" stroke-width="1"/>
-  <polygon points="1600 623 1578 624 1571 630 " stroke="#000008" fill="#000008" stroke-width="1"/>
   <polygon points="502 615 466 624 501 623 " stroke="#0e0000" fill="#0e0000" stroke-width="1"/>
   <polygon points="333 616 310 615 319 623 " stroke="#090000" fill="#090000" stroke-width="1"/>
   <polygon points="333 616 319 623 341 624 " stroke="#090000" fill="#090000" stroke-width="1"/>
   <polygon points="501 623 466 624 467 630 " stroke="#0d0000" fill="#0d0000" stroke-width="1"/>
+  <polygon points="1609 615 1578 624 1600 623 " stroke="#000009" fill="#000009" stroke-width="1"/>
+  <polygon points="1600 623 1578 624 1571 630 " stroke="#000008" fill="#000008" stroke-width="1"/>
   <polygon points="1454 616 1417 615 1418 623 " stroke="#00000e" fill="#00000e" stroke-width="1"/>
   <polygon points="1454 616 1418 623 1453 624 " stroke="#00000f" fill="#00000f" stroke-width="1"/>
   <polygon points="410 369 377 387 405 386 " stroke="#1f0000" fill="#1f0000" stroke-width="1"/>
@@ -3949,8 +3949,8 @@
   <polygon points="1647 482 1633 499 1653 500 " stroke="#000009" fill="#000009" stroke-width="1"/>
   <polygon points="1417 462 1376 482 1416 481 " stroke="#000014" fill="#000014" stroke-width="1"/>
   <polygon points="1416 481 1376 482 1375 500 " stroke="#000014" fill="#000014" stroke-width="1"/>
-  <polygon points="1617 538 1664 545 1660 531 " stroke="#000012" fill="#000012" stroke-width="1"/>
   <polygon points="261 517 259 531 302 538 " stroke="#110000" fill="#110000" stroke-width="1"/>
+  <polygon points="1617 538 1664 545 1660 531 " stroke="#000012" fill="#000012" stroke-width="1"/>
   <polygon points="434 631 403 631 407 636 " stroke="#0e0000" fill="#0e0000" stroke-width="1"/>
   <polygon points="1545 631 1516 631 1512 636 " stroke="#00000d" fill="#00000d" stroke-width="1"/>
   <polygon points="436 387 405 386 400 405 " stroke="#230000" fill="#230000" stroke-width="1"/>
@@ -3989,12 +3989,12 @@
   <polygon points="1416 499 1375 500 1374 517 " stroke="#000015" fill="#000015" stroke-width="1"/>
   <polygon points="405 386 370 405 400 405 " stroke="#200000" fill="#200000" stroke-width="1"/>
   <polygon points="1514 386 1486 405 1519 405 " stroke="#000023" fill="#000023" stroke-width="1"/>
+  <polygon points="546 568 503 583 544 582 " stroke="#140000" fill="#140000" stroke-width="1"/>
+  <polygon points="544 582 503 583 503 595 " stroke="#120000" fill="#120000" stroke-width="1"/>
   <polygon points="1659 568 1634 583 1654 582 " stroke="#000009" fill="#000009" stroke-width="1"/>
   <polygon points="1654 582 1634 583 1627 595 " stroke="#000008" fill="#000008" stroke-width="1"/>
-  <polygon points="546 568 503 583 544 582 " stroke="#140000" fill="#140000" stroke-width="1"/>
   <polygon points="280 568 260 568 265 582 " stroke="#090000" fill="#090000" stroke-width="1"/>
   <polygon points="280 568 265 582 285 583 " stroke="#090000" fill="#090000" stroke-width="1"/>
-  <polygon points="544 582 503 583 503 595 " stroke="#120000" fill="#120000" stroke-width="1"/>
   <polygon points="1416 568 1373 568 1375 582 " stroke="#000014" fill="#000014" stroke-width="1"/>
   <polygon points="1416 568 1375 582 1416 583 " stroke="#000014" fill="#000014" stroke-width="1"/>
   <polygon points="466 624 431 625 434 631 " stroke="#0e0000" fill="#0e0000" stroke-width="1"/>
@@ -4152,9 +4152,9 @@
   <polygon points="1590 443 1561 442 1566 461 " stroke="#00001a" fill="#00001a" stroke-width="1"/>
   <polygon points="1590 443 1566 461 1596 461 " stroke="#00001a" fill="#00001a" stroke-width="1"/>
   <polygon points="1492 442 1455 443 1456 461 " stroke="#000021" fill="#000021" stroke-width="1"/>
+  <polygon points="213 474 232 495 233 486 " stroke="#080000" fill="#080000" stroke-width="1"/>
   <polygon points="1686 486 1687 495 1709 481 " stroke="#000008" fill="#000008" stroke-width="1"/>
   <polygon points="1686 486 1709 481 1706 474 " stroke="#000008" fill="#000008" stroke-width="1"/>
-  <polygon points="213 474 232 495 233 486 " stroke="#080000" fill="#080000" stroke-width="1"/>
   <polygon points="395 423 358 442 391 442 " stroke="#240000" fill="#240000" stroke-width="1"/>
   <polygon points="1524 423 1492 442 1528 442 " stroke="#000027" fill="#000027" stroke-width="1"/>
   <polygon points="220 531 214 542 251 557 " stroke="#180000" fill="#180000" stroke-width="1"/>
@@ -4173,9 +4173,9 @@
   <polygon points="1565 607 1526 617 1558 617 " stroke="#000012" fill="#000012" stroke-width="1"/>
   <polygon points="1531 608 1494 607 1491 617 " stroke="#000013" fill="#000013" stroke-width="1"/>
   <polygon points="1531 608 1491 617 1526 617 " stroke="#000013" fill="#000013" stroke-width="1"/>
-  <polygon points="317 480 286 499 312 498 " stroke="#110000" fill="#110000" stroke-width="1"/>
   <polygon points="503 499 461 498 460 517 " stroke="#1c0000" fill="#1c0000" stroke-width="1"/>
   <polygon points="503 499 460 517 503 517 " stroke="#1c0000" fill="#1c0000" stroke-width="1"/>
+  <polygon points="317 480 286 499 312 498 " stroke="#110000" fill="#110000" stroke-width="1"/>
   <polygon points="312 498 286 499 282 517 " stroke="#120000" fill="#120000" stroke-width="1"/>
   <polygon points="1457 480 1416 499 1458 498 " stroke="#00001b" fill="#00001b" stroke-width="1"/>
   <polygon points="1633 499 1607 498 1611 517 " stroke="#000012" fill="#000012" stroke-width="1"/>
@@ -4319,10 +4319,10 @@
   <polygon points="188 522 181 530 208 551 " stroke="#1e0000" fill="#1e0000" stroke-width="1"/>
   <polygon points="1711 551 1744 535 1738 530 " stroke="#00000d" fill="#00000d" stroke-width="1"/>
   <polygon points="1705 542 1711 551 1738 530 " stroke="#00001c" fill="#00001c" stroke-width="1"/>
-  <polygon points="1721 459 1724 465 1735 446 " stroke="#000006" fill="#000006" stroke-width="1"/>
-  <polygon points="1721 459 1735 446 1732 442 " stroke="#000007" fill="#000007" stroke-width="1"/>
   <polygon points="187 442 195 465 198 459 " stroke="#060000" fill="#060000" stroke-width="1"/>
   <polygon points="198 459 195 465 210 481 " stroke="#070000" fill="#070000" stroke-width="1"/>
+  <polygon points="1721 459 1724 465 1735 446 " stroke="#000006" fill="#000006" stroke-width="1"/>
+  <polygon points="1721 459 1735 446 1732 442 " stroke="#000007" fill="#000007" stroke-width="1"/>
   <polygon points="144 481 140 483 152 511 " stroke="#040000" fill="#040000" stroke-width="1"/>
   <polygon points="144 481 152 511 157 509 " stroke="#040000" fill="#040000" stroke-width="1"/>
   <polygon points="1762 509 1767 511 1779 483 " stroke="#000004" fill="#000004" stroke-width="1"/>
@@ -4345,12 +4345,12 @@
   <polygon points="210 481 206 490 229 506 " stroke="#0d0000" fill="#0d0000" stroke-width="1"/>
   <polygon points="1690 506 1694 518 1718 501 " stroke="#000013" fill="#000013" stroke-width="1"/>
   <polygon points="1690 506 1718 501 1713 490 " stroke="#000013" fill="#000013" stroke-width="1"/>
-  <polygon points="1613 569 1576 584 1608 583 " stroke="#00001d" fill="#00001d" stroke-width="1"/>
-  <polygon points="1608 583 1576 584 1571 596 " stroke="#000016" fill="#000016" stroke-width="1"/>
   <polygon points="460 569 419 584 461 583 " stroke="#240000" fill="#240000" stroke-width="1"/>
   <polygon points="339 569 306 569 311 583 " stroke="#1d0000" fill="#1d0000" stroke-width="1"/>
   <polygon points="339 569 311 583 343 584 " stroke="#1d0000" fill="#1d0000" stroke-width="1"/>
   <polygon points="461 583 419 584 422 596 " stroke="#1d0000" fill="#1d0000" stroke-width="1"/>
+  <polygon points="1613 569 1576 584 1608 583 " stroke="#00001d" fill="#00001d" stroke-width="1"/>
+  <polygon points="1608 583 1576 584 1571 596 " stroke="#000016" fill="#000016" stroke-width="1"/>
   <polygon points="1502 569 1459 569 1458 583 " stroke="#000025" fill="#000025" stroke-width="1"/>
   <polygon points="1502 569 1458 583 1500 584 " stroke="#000025" fill="#000025" stroke-width="1"/>
   <polygon points="129 453 118 424 118 425 " stroke="#000000" fill="#000000" stroke-width="1"/>
@@ -4460,9 +4460,9 @@
   <polygon points="1580 569 1540 584 1576 584 " stroke="#00002d" fill="#00002d" stroke-width="1"/>
   <polygon points="1543 569 1502 569 1500 584 " stroke="#000030" fill="#000030" stroke-width="1"/>
   <polygon points="1543 569 1500 584 1540 584 " stroke="#000030" fill="#000030" stroke-width="1"/>
+  <polygon points="190 472 201 501 206 490 " stroke="#140000" fill="#140000" stroke-width="1"/>
   <polygon points="1713 490 1718 501 1736 481 " stroke="#000014" fill="#000014" stroke-width="1"/>
   <polygon points="1713 490 1736 481 1729 472 " stroke="#000013" fill="#000013" stroke-width="1"/>
-  <polygon points="190 472 201 501 206 490 " stroke="#140000" fill="#140000" stroke-width="1"/>
   <polygon points="184 446 178 452 190 472 " stroke="#0c0000" fill="#0c0000" stroke-width="1"/>
   <polygon points="175 427 178 452 184 446 " stroke="#0b0000" fill="#0b0000" stroke-width="1"/>
   <polygon points="1735 446 1741 452 1750 431 " stroke="#00000b" fill="#00000b" stroke-width="1"/>
@@ -4575,10 +4575,10 @@
   <polygon points="1804 352 1808 352 1807 351 " stroke="#000007" fill="#000007" stroke-width="1"/>
   <polygon points="1804 352 1807 351 1804 351 " stroke="#000008" fill="#000008" stroke-width="1"/>
   <polygon points="1808 352 1815 351 1807 351 " stroke="#000017" fill="#000017" stroke-width="1"/>
-  <polygon points="1543 535 1502 552 1544 552 " stroke="#000049" fill="#000049" stroke-width="1"/>
-  <polygon points="1581 552 1544 552 1543 569 " stroke="#000043" fill="#000043" stroke-width="1"/>
   <polygon points="376 535 338 552 375 552 " stroke="#470000" fill="#470000" stroke-width="1"/>
   <polygon points="417 552 375 552 376 569 " stroke="#450000" fill="#450000" stroke-width="1"/>
+  <polygon points="1543 535 1502 552 1544 552 " stroke="#000049" fill="#000049" stroke-width="1"/>
+  <polygon points="1581 552 1544 552 1543 569 " stroke="#000043" fill="#000043" stroke-width="1"/>
   <polygon points="104 351 93 350 93 351 " stroke="#120000" fill="#120000" stroke-width="1"/>
   <polygon points="104 351 93 351 104 352 " stroke="#120000" fill="#120000" stroke-width="1"/>
   <polygon points="1815 352 1826 350 1815 351 " stroke="#000012" fill="#000012" stroke-width="1"/>
