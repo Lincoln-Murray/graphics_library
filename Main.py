@@ -397,7 +397,7 @@ class object():
                             split[1], split[2], split[3] = rotate_point(float(split[2]), float(split[3]), float(split[1]), ax)
                             face.append([float(split[1]*scale_x) + x, float(split[2]*scale_y) - y, float(split[3]*scale_z) + z])
                         if split[0] == 'endloop':
-                            face.append(random_colour())
+                            face.append(_hex_to_rgb(random_colour()))
                             self.object_array.append(face)
                             face = []
                 else:
@@ -454,7 +454,7 @@ class object():
                                 temp_vertex = []
                             if temp_2 == 3 and temp == 0:
                                 tri = [tri[2], tri[1], tri[0]]
-                                tri.append(random_colour())
+                                tri.append(_hex_to_rgb(random_colour()))
                                 self.object_array.append(tri)
                                 tri = []
         parent.map_array.append(self.object_array)
