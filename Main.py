@@ -11,6 +11,10 @@ half_height, half_width = 1,1
 def _rgb_to_hex(rgb_colour: Tuple[int] | List[int]) -> string:
     return '#%02x%02x%02x' % (rgb_colour[0], rgb_colour[1], rgb_colour[2])
 
+# convert hex to (r,g,b)
+def _hex_to_rgb(hexidecimal: str) -> Tuple[int]:
+    return int(hexidecimal[1:3], 16), int(hexidecimal[3:5], 16), int(hexidecimal[5:7], 16)
+
 #generates a random hexedecimal colour string in the format '#000000'
 def random_colour() -> string:
     hexlen = 0
@@ -105,8 +109,6 @@ def get_normal_from_triangle(x1,y1,z1,x2,y2,z2,x3,y3,z3):
 #scales polygon points and applies appropriate colouring to faces
 def render_wall_from_normalised_points(x1_3d,y1_3d,z1_3d,x2_3d,y2_3d,z2_3d,x3_3d,y3_3d,z3_3d,colour,wiremesh,light_array,outline) -> list:
     global half_width, half_height
-
-    colour = (int(colour[1:3], 16), int(colour[3:5], 16), int(colour[5:], 16))
 
     if not wiremesh:
         nx,ny,nz = get_normal_from_triangle(x1_3d,y1_3d,z1_3d,x2_3d,y2_3d,z2_3d,x3_3d,y3_3d,z3_3d)
@@ -372,7 +374,7 @@ class object():
                         else:
                             new_colour = current_material[0]
                     for p in range(2,len(split)-1):
-                        self.object_array.append([locals()["fv1"], locals()["fv"+str(p)], locals()["fv"+str(p+1)], new_colour])
+                        self.object_array.append([locals()["fv1"], locals()["fv"+str(p)], locals()["fv"+str(p+1)], _hex_to_rgb(new_colour)])
                 elif line.split()[0] == 'usemtl':
                     current_material = materials[line.split()[1]]
         #load .stl files
