@@ -37,8 +37,6 @@ def average_colour(colour_list) -> Tuple[int]:
     for count, colour in enumerate(colour_list):
         r, g, b = r + colour[0], g + colour[1], b + colour[2]
 
-    print(count)
-
     if count!=0:
         r, g, b = int(r/count), int(g/count), int(b/count)
 
