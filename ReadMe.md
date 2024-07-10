@@ -28,7 +28,8 @@
 
 ## <a name = "getting_started">Getting Started</a>
 
-To get this library running download the Main.py file and put it into your projects folder, then you need to just import it like you would any other Python3 library(by whatever the filename is). That's it, then you can create instances of the classes to use the library/module(whatever you want to call it).
+To get this library running download the Main.py file and put it into your projects folder, then you need to just import it like you would any other Python3 library(by whatever the filename is). That's it, then you can create instances of the classes to use the library/module(whatever you want to call it).  
+### Features
 
 ## <a name = "usage">Usage</a>
 
