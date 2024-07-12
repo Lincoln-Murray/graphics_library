@@ -33,6 +33,7 @@ To get this library running download the Main.py file and put it into your proje
 - Shading  
 - Versatile usage  
 - Lightweight  
+- Multiple formats supported  
 
 ## <a name = "usage">Usage</a>
 
