@@ -32,6 +32,7 @@ renderer.view_style(False, 0.1, '')
 #main loop
 def loop() -> None:
     start = time.time()
+    viewport.delete("all")
     viewport.create_rectangle(0,0,renderer.width,renderer.height, fill=renderer.background_colour)
     triangles = renderer.new_frame()
     renderer.move_camera(_camera_angle_z = 1, _camera_angle_y=2)
