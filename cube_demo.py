@@ -38,9 +38,9 @@ def loop() -> None:
     renderer.move_camera(_camera_angle_z = 1, _camera_angle_y=2)
     for tri in triangles:
         viewport.create_polygon([tri[0], tri[1], tri[2], tri[3], tri[4], tri[5]],outline=tri[-2], fill=tri[-1])
-    frame_time = int((time.time() - start)*1000)
-    if frame_time < 50:
-        master.after(50-frame_time,loop)
+    frame_time = int(((time.time() - start)*1000))
+    if frame_time < 15:
+        master.after(15-frame_time,loop)
     else:
         master.after(1,loop)
 
