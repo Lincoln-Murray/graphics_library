@@ -301,6 +301,7 @@ class object():
         model = open(_model, 'rt', encoding='cp1252')
         self.object_array = []
         self.parent = parent
+        vertex_dictionary = dict()
         #load .obj files
         if _model[-4:] == '.obj':
             count = 0
@@ -346,7 +347,7 @@ class object():
                     split[1], split[2], split[3] = rotate_point(float(split[1]), float(split[2]), float(split[3]), az)
                     split[1], split[2], split[3] = rotate_point(float(split[3]), float(split[1]), float(split[2]), ay)
                     split[1], split[2], split[3] = rotate_point(float(split[2]), float(split[3]), float(split[1]), ax)
-                    locals()["v"+str(count)] = [float(split[1]*scale_x) + x, float(split[2]*scale_y) - y, float(split[3]*scale_z) + z]
+                    vertex_dictionary["v"+str(count)] = [float(split[1]*scale_x) + x, float(split[2]*scale_y) - y, float(split[3]*scale_z) + z]
                 elif line[0] == 'f' and line[1] == ' ':
                     split = line.split()
                     for i in range(0, len(split)):
@@ -365,7 +366,7 @@ class object():
                                     elif pos == 2:
                                         vn += char
                         if i != 0:
-                            locals()["fv" + str(i)] = locals()["v"+str(v)]
+                            vertex_dictionary["fv" + str(i)] = vertex_dictionary["v"+str(v)]
                     if colour == None and current_material == None:
                         new_colour = random_colour()
                     else:
@@ -374,7 +375,7 @@ class object():
                         else:
                             new_colour = current_material[0]
                     for p in range(2,len(split)-1):
-                        self.object_array.append([locals()["fv1"], locals()["fv"+str(p)], locals()["fv"+str(p+1)], _hex_to_rgb(new_colour)])
+                        self.object_array.append([vertex_dictionary["fv1"], vertex_dictionary["fv"+str(p)], vertex_dictionary["fv"+str(p+1)], _hex_to_rgb(new_colour)])
                 elif line.split()[0] == 'usemtl':
                     current_material = materials[line.split()[1]]
         #load .stl files
