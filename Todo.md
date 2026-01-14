@@ -5,8 +5,8 @@
 * [ ] Use precalculated normal
 
 - [ ] Work on individual object rotation
-- [ ] Fix lag
-  - [ ] Swap from Tkinter?
+- [x] Fix lag
+  - [x] clear tkinter vieport
   - [X] use time to run loop at consistent intervals
 
 ### In Progress
@@ -16,8 +16,7 @@
   - [ ] rasterization
   - [X] export to svg
   - [X] write to binary files
-  - [ ] export to jpg
-  - [ ] export to mp4
+  - [ ] export to bmp
 - [ ] Add Mtl support
 
   - [X] colouring
