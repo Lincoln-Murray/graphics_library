@@ -1,7 +1,7 @@
 import math
 
 class rasteriser:
-    def __init__(self, _height, _width):
+    def __init__(self, _height, _width, default_colour = '#000000'):
         self.height = _height
         self.width = _width
         self.image_pixels = []
@@ -9,7 +9,7 @@ class rasteriser:
             self.image_pixels.append([])
             for y in range(0, self.width):
                 self.image_pixels[x].append([])
-                self.image_pixels[x][y] = '#777777'
+                self.image_pixels[x][y] = default_colour
     
     def bottom_triangle(self, triangle, colour):
         if triangle[1] == triangle[3]:
