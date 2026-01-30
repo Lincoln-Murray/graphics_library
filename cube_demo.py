@@ -10,7 +10,9 @@ model_2 = 'models/cube.obj'
 
 renderer = Main.gl(1920,1080, 55, 1000, 0.1)
 cube = Main.object(renderer, model,0,0,1,0,35,0, 0.0000001, 0.0000001, 0.0000001, None)
-cube = Main.object(renderer, model_2,-3,0,1,0,35,0, 0.5, 0.5, 0.5, None)
+cube_2 = Main.object(renderer, model_2,0,0,0,0,0,0, 1, 1, 1, None)
+
+cube_2.move(renderer, 2, 0, 0)
 
 renderer.camera_absolute(_camera_x = 0, _camera_y = 0, _camera_z = 10, _camera_angle_x = 0, _camera_angle_y = 0, _camera_angle_z = 0)
 
@@ -30,7 +32,15 @@ viewport.pack(side=TOP)
 renderer.view_style(False, 0.1, '')
 
 #main loop
+mult = 1
+frame = 0
 def loop() -> None:
+    global mult, frame
+    frame += 1
+    cube_2.move(renderer, mult*(2/20), 0, 0)
+    if frame == 20:
+        frame = 0
+        mult *= -1
     start = time.time()
     viewport.delete("all")
     viewport.create_rectangle(0,0,renderer.width,renderer.height, fill=renderer.background_colour)
@@ -43,7 +53,6 @@ def loop() -> None:
         master.after(15-frame_time,loop)
     else:
         master.after(1,loop)
-
 #call the loop
 master.after(1,loop)
 master.mainloop()

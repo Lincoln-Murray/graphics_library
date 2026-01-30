@@ -461,7 +461,17 @@ class object():
         del vertex_dictionary
         parent.map_array.append(self.object_array)
         self.map_position = parent.map_array.index(self.object_array)
-        
+    
+    def move(self, parent, x, y, z) -> None:
+        print(parent.map_array[self.map_position])
+        for tri in parent.map_array[self.map_position]:
+            print(tri)
+            for point in range(0,3):     
+                print(tri[point])           
+                tri[point][0] += x
+                tri[point][1] -= y
+                tri[point][2] += z
+
     def delete(self) -> None:
         del self.parent.map_array[self.map_array]
         del self
