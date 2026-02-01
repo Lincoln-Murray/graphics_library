@@ -165,6 +165,8 @@ class gl:
     #class variables
     map_array = []
     light_array = []
+    same_frame = False
+    cached_frame = []
     #creates passed attributes to class variables 
     def __init__(self, _width = 1920, _height = 1080, _fov = 55, _zfar = 1000, _znear = 0.1) -> None:
         if _fov >= 180:
@@ -197,6 +199,7 @@ class gl:
             self.camera_angle_y = math.radians(_camera_angle_y)
         if _camera_angle_z != None:
             self.camera_angle_z = math.radians(_camera_angle_z)
+        same_frame = False
 
     #translates the location of the camera in local coordinates(mostly)
     def move_camera(self, _camera_x = 0, _camera_y = 0, _camera_z = 0, _camera_angle_x = 0, _camera_angle_y = 0, _camera_angle_z = 0) -> None:
@@ -205,8 +208,8 @@ class gl:
         self.camera_x += math.cos(self.camera_angle_y) * _camera_x
         self.camera_z += math.sin(self.camera_angle_y) * _camera_x
         self.camera_y += _camera_y
-        
         self.camera_angle_x, self.camera_angle_y, self.camera_angle_z = self.camera_angle_x + math.radians(_camera_angle_x), self.camera_angle_y + math.radians(_camera_angle_y), self.camera_angle_z + math.radians(_camera_angle_z)
+        same_frame = False
 
     #defines the style and renderer specifications
     def view_style(self, _wiremesh = False, _background = 1, outline_colour = '') -> None:
@@ -228,29 +231,35 @@ class gl:
             self.background_colour = _background
         self.wiremesh = _wiremesh
         self.outline = outline_colour
+        same_frame = False
 
     #calls a new frame and passes all walls and triangles to other functions
     def new_frame(self) -> list:
-        frame = []
-        sp = {
-            0: {},
-            1: {},
-            2: {}
-        }
-        for model in self.map_array:
-            for wall_num in range(0,len(model)):
-                wall = model[wall_num]
-                point_num = 0
-                for point in wall[:-1]:
-                    sp[point_num][wall_num] = scale_point(point[0],point[1],point[2], self.zfar, self.znear, self.fov, self.ar, self.camera_x, self.camera_y, self.camera_z , self.camera_angle_x, self.camera_angle_y, self.camera_angle_z)
-                    point_num += 1
+        if self.same_frame:
+            frame = []
+            sp = {
+                0: {},
+                1: {},
+                2: {}
+            }
+            for model in self.map_array:
+                for wall_num in range(0,len(model)):
+                    wall = model[wall_num]
+                    point_num = 0
+                    for point in wall[:-1]:
+                        sp[point_num][wall_num] = scale_point(point[0],point[1],point[2], self.zfar, self.znear, self.fov, self.ar, self.camera_x, self.camera_y, self.camera_z , self.camera_angle_x, self.camera_angle_y, self.camera_angle_z)
+                        point_num += 1
 
-                temp_tri = render_wall_from_normalised_points(sp[0][wall_num][0],sp[0][wall_num][1],sp[0][wall_num][2],sp[1][wall_num][0],sp[1][wall_num][1],sp[1][wall_num][2],sp[2][wall_num][0],sp[2][wall_num][1],sp[2][wall_num][2],wall[len(wall)-1], self.wiremesh, self.light_array, self.outline)
-                if temp_tri != None:
-                    frame.append(temp_tri)
-                    #print(temp_tri)
-        frame.sort(key=lambda l : l[6], reverse= True)
-        return frame
+                    temp_tri = render_wall_from_normalised_points(sp[0][wall_num][0],sp[0][wall_num][1],sp[0][wall_num][2],sp[1][wall_num][0],sp[1][wall_num][1],sp[1][wall_num][2],sp[2][wall_num][0],sp[2][wall_num][1],sp[2][wall_num][2],wall[len(wall)-1], self.wiremesh, self.light_array, self.outline)
+                    if temp_tri != None:
+                        frame.append(temp_tri)
+                        #print(temp_tri)
+            frame.sort(key=lambda l : l[6], reverse= True)
+            self.same_frame = True
+            self.cached_frame = frame
+            return frame
+        else:
+            return self.cached_frame    
 
     #renders an image to the desired fromat
     def render_image(self, output_location = "images/output", file_format = '.svg', _line_thickness = 1) -> None:
@@ -278,6 +287,7 @@ class light():
         self.parent = parent
         parent.light_array.append(self.attributes)
         self.light_position = parent.light_array.index(self.attributes)
+        parent.same_frame = False
 
     #translates the light locally
     def move_light(self,x,y,z) -> None:
@@ -287,9 +297,11 @@ class light():
         del self.parent.light_array[self.light_position]
         self.parent.light_array.append(self.attributes)
         self.light_position = self.parent.light_array.index(self.attributes)
+        self.parent.same_frame = False
 
     #deletes the light
     def delete(self) -> None:
+        self.parent.same_frame = False
         del self.parent.light_array[self.light_position]
         del self
 
@@ -461,7 +473,8 @@ class object():
         del vertex_dictionary
         parent.map_array.append(self.object_array)
         self.map_position = parent.map_array.index(self.object_array)
-    
+        self.parent.same_frame = False
+
     def move(self, parent, x, y, z) -> None:
         print(parent.map_array[self.map_position])
         for tri in parent.map_array[self.map_position]:
@@ -471,7 +484,9 @@ class object():
                 tri[point][0] += x
                 tri[point][1] -= y
                 tri[point][2] += z
+        self.parent.same_frame = False
 
     def delete(self) -> None:
         del self.parent.map_array[self.map_array]
         del self
+        self.parent.same_frame = False
