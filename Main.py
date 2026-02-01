@@ -3,6 +3,8 @@ import math
 import random
 import string
 from typing import Tuple, List
+import bmp_writer
+import rasteriser
 
 #global variables
 half_height, half_width = 1,1
@@ -263,8 +265,8 @@ class gl:
 
     #renders an image to the desired fromat
     def render_image(self, output_location = "images/output", file_format = '.svg', _line_thickness = 1) -> None:
-        output = open(output_location + file_format, 'w')
         if file_format == '.svg':
+            output = open(output_location + file_format, 'w')
             intro_string = '''<svg version="1.1" width="'''+str(self.width)+'''" height="'''+str(self.height)+'''" xmlns="http://www.w3.org/2000/svg">
                 <rect width="100%" height="100%" fill="'''+self.background_colour+'''" />
             '''
@@ -277,7 +279,13 @@ class gl:
                 output.write('  <polygon points="'+str(tri[0])+' '+str(tri[1])+' '+str(tri[2])+' '+str(tri[3])+' '+str(tri[4])+' '+str(tri[5])+' " stroke="'+tri[-2]+'" fill="'+tri[-1]+'" stroke-width="'+str(_line_thickness)+'"/>\n')
 
             output.write('</svg>')
-        output.close()
+            output.close()
+        elif file_format == '.bmp':
+            rast = rasteriser.rasteriser(self.height, self.width)
+            triangles = self.new_frame()
+            for tri in triangles:
+                rast.draw_triangle(triangle=[tri[0], tri[1], tri[2], tri[3], tri[4], tri[5]], colour=tri[-1])
+            bmp_writer.write_bmp(output_location, self.width, self.height, rast.image_pixels) 
 
 #lighting class
 class light():
