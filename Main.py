@@ -215,7 +215,6 @@ class gl:
 
     #defines the style and renderer specifications
     def view_style(self, _wiremesh = False, _background = 1, outline_colour = '') -> None:
-        #print(type(_background))
         if type(_background) != str:
             colours = []
             for light in self.light_array:
@@ -255,7 +254,6 @@ class gl:
                     temp_tri = render_wall_from_normalised_points(sp[0][wall_num][0],sp[0][wall_num][1],sp[0][wall_num][2],sp[1][wall_num][0],sp[1][wall_num][1],sp[1][wall_num][2],sp[2][wall_num][0],sp[2][wall_num][1],sp[2][wall_num][2],wall[len(wall)-1], self.wiremesh, self.light_array, self.outline)
                     if temp_tri != None:
                         frame.append(temp_tri)
-                        #print(temp_tri)
             frame.sort(key=lambda l : l[6], reverse= True)
             self.same_frame = True
             self.cached_frame = frame
