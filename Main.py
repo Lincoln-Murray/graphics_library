@@ -137,9 +137,8 @@ def render_wall_from_normalised_points(x1_3d,y1_3d,z1_3d,x2_3d,y2_3d,z2_3d,x3_3d
         y2_2d = y2_3d*half_height+half_height
         x3_2d = x3_3d*half_width+half_width
         y3_2d = y3_3d*half_height+half_height
-        z_list = [z1_3d, z2_3d, z3_3d]
-        z_list.sort(reverse=True)
-        return [int(x1_2d),int(y1_2d),int(x2_2d),int(y2_2d),int(x3_2d),int(y3_2d),z_list[0],_outline,colour]
+        z_avg = (z1_3d + z2_3d + z3_3d) / 3
+        return [int(x1_2d),int(y1_2d),int(x2_2d),int(y2_2d),int(x3_2d),int(y3_2d),z_avg,_outline,colour]
 
 #rotates a point around the raxis(rotation axis) by an angle in radians
 def rotate_point(axisone,axistwo,raxis, angle):
@@ -167,8 +166,6 @@ class gl:
     #class variables
     map_array = []
     light_array = []
-    same_frame = False
-    cached_frame = []
     #creates passed attributes to class variables 
     def __init__(self, _width = 1920, _height = 1080, _fov = 55, _zfar = 1000, _znear = 0.1) -> None:
         if _fov >= 180:
@@ -186,6 +183,8 @@ class gl:
         self.wiremesh = False
         self.background_colour = '#000000'
         self.outline = ''
+        self.same_frame = False
+        self.cached_frame = []
 
     #sets the absolute location of the camera in global coordinates
     def camera_absolute(self, _camera_x = None, _camera_y = None, _camera_z = None, _camera_angle_x = None, _camera_angle_y = None, _camera_angle_z = None) -> None:
@@ -201,7 +200,7 @@ class gl:
             self.camera_angle_y = math.radians(_camera_angle_y)
         if _camera_angle_z != None:
             self.camera_angle_z = math.radians(_camera_angle_z)
-        same_frame = False
+        self.same_frame = False
 
     #translates the location of the camera in local coordinates(mostly)
     def move_camera(self, _camera_x = 0, _camera_y = 0, _camera_z = 0, _camera_angle_x = 0, _camera_angle_y = 0, _camera_angle_z = 0) -> None:
@@ -211,7 +210,7 @@ class gl:
         self.camera_z += math.sin(self.camera_angle_y) * _camera_x
         self.camera_y += _camera_y
         self.camera_angle_x, self.camera_angle_y, self.camera_angle_z = self.camera_angle_x + math.radians(_camera_angle_x), self.camera_angle_y + math.radians(_camera_angle_y), self.camera_angle_z + math.radians(_camera_angle_z)
-        same_frame = False
+        self.same_frame = False
 
     #defines the style and renderer specifications
     def view_style(self, _wiremesh = False, _background = 1, outline_colour = '') -> None:
@@ -232,11 +231,11 @@ class gl:
             self.background_colour = _background
         self.wiremesh = _wiremesh
         self.outline = outline_colour
-        same_frame = False
+        self.same_frame = False
 
     #calls a new frame and passes all walls and triangles to other functions
     def new_frame(self) -> list:
-        if self.same_frame:
+        if not self.same_frame:
             frame = []
             sp = {
                 0: {},
