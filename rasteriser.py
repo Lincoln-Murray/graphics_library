@@ -34,9 +34,24 @@ class rasteriser:
         x2 = topv[0]
         called = False
         if topv[1] < 0:
+            x1 += islope1*abs(topv[1])
+            x2 += islope2*abs(topv[1])
             topv[1] = 0
+        if v1[1] > self.height:
+            v1[1] = self.height
+
         for y in range(topv[1], v1[1], 1):
-            for x in range(math.floor(x1), math.ceil(x2), 1):
+            _x1 = x1
+            if _x1 < 0:
+                _x1 = 0
+            _x2 = x2
+            if _x2 < 0:
+                _x2 = 0
+            if _x1 > self.width:
+                _x1 = self.width
+            if _x2 > self.width:
+                _x2 = self.width
+            for x in range(math.floor(_x1), math.ceil(_x2), 1):
                 if x > 0 and x < self.width:
                     if y > 0 and y < self.height:
                         self.image_pixels[y][x] = colour
@@ -87,8 +102,24 @@ class rasteriser:
 
 
         called = False
+        if v1[1] < 0:
+            x1 += islope1*abs(v1[1])
+            x2 += islope2*abs(v1[1])
+            v1[1] = 0
+        if bottomv[1] > self.height:
+            bottomv[1] = self.height
         for y in range(v1[1], bottomv[1], 1):
-            for x in range(math.floor(x1), math.ceil(x2), 1):
+            _x1 = x1
+            if _x1 < 0:
+                _x1 = 0
+            _x2 = x2
+            if _x2 < 0:
+                _x2 = 0
+            if _x1 > self.width:
+                _x1 = self.width
+            if _x2 > self.width:
+                _x2 = self.width
+            for x in range(math.floor(_x1), math.ceil(_x2), 1):
                 if x > 0 and x < self.width:
                     if y > 0 and y < self.height:    
                         self.image_pixels[y][x] = colour
@@ -110,4 +141,6 @@ class rasteriser:
             newx = int(new_tri[0][0] + ((new_tri[1][1]-new_tri[0][1])/(new_tri[2][1] - new_tri[0][1]))*(new_tri[2][0] - new_tri[0][0]))
             self.bottom_triangle([new_tri[0][0], new_tri[0][1], new_tri[1][0], new_tri[1][1], newx, new_tri[1][1]], colour)
             self.top_triangle([new_tri[2][0], new_tri[2][1], new_tri[1][0], new_tri[1][1], newx, new_tri[1][1]], colour)
+            del new_tri
+            del newx
            

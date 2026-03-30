@@ -398,6 +398,7 @@ class object():
                         self.object_array.append([vertex_dictionary["fv1"][:], vertex_dictionary["fv"+str(p)][:], vertex_dictionary["fv"+str(p+1)][:], _hex_to_rgb(new_colour)])
                 elif line.split()[0] == 'usemtl':
                     current_material = materials[line.split()[1]]
+                    #print(line, current_material)
         #load .stl files
         elif _model[-4:] == '.stl':
                 if model.read()[:5] == 'solid':
@@ -484,11 +485,8 @@ class object():
         self.parent.same_frame = False
 
     def move(self, parent, x, y, z) -> None:
-        print(parent.map_array[self.map_position])
         for tri in parent.map_array[self.map_position]:
-            print(tri)
             for point in range(0,3):     
-                print(tri[point])           
                 tri[point][0] += x
                 tri[point][1] -= y
                 tri[point][2] += z
